@@ -1,0 +1,67 @@
+<div class="auth-layout">
+    <div class="auth-box">
+        <div>
+            <h1>Register</h1>
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+        <div>
+            <form class="row g-3" #signupForm="ngForm">
+                <div class="col-12">
+                  <label for="inputEmail" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="inputEmail" name="email" [(ngModel)]="user.email" required
+                  [class.invalid]="signupForm.controls['email'] && signupForm.controls['email'].invalid && signupForm.controls['email'].touched">
+                  
+                </div>
+                <div class="col-12">
+                  <label for="inputPassword" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="inputPassword" name="password" [(ngModel)]="user.password" required
+                  [class.invalid]="signupForm.controls['password'] && signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
+                  
+                </div>
+                <div class="col-12">
+                  <label for="inputName" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="user.name" required 
+                  [class.invalid]="signupForm.controls['name'] && signupForm.controls['name'].invalid && signupForm.controls['name'].touched">
+                  
+                </div>
+                
+                <div class="col-md-2">
+                  <label for="inputCountryCode" class="form-label">Country Code</label>
+                  <input type="text" class="form-control" id="inputCountryCode" name="countryCode" [(ngModel)]="countryCode" required
+                  [class.invalid]="signupForm.controls['countryCode'] && signupForm.controls['countryCode'].invalid && signupForm.controls['countryCode'].touched">
+                  
+                </div>
+                
+                <div class="col-md-10">
+                  <label for="inputPhoneNumber" class="form-label">Phone Number</label>
+                  <input type="text" class="form-control" id="inputPhoneNumber" name="phone" [(ngModel)]="user.phone" required
+                  [class.invalid]="signupForm.controls['phone'] && signupForm.controls['phone'].invalid && signupForm.controls['phone'].touched">
+                  
+                </div>
+    
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="policyCheck">
+                    <label class="form-check-label" for="policyCheck">
+                      I've read and I accept the <a href="#">Privacy Policy</a> and <a href="">Terms of Service</a>
+                    </label>
+                  </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="newsletterCheck">
+                      <label class="form-check-label" for="newsletterCheck">
+                        Sign me up for that awesome newsletter!
+                      </label>
+                    </div>
+                  </div>
+    
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid" (click)="signupClicked()">Sign up</button>
+                </div>
+              </form>
+        </div>
+        
+    </div>
+</div>
