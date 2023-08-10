@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    /* background-image: url('../src/assets/images/bubbles.jpg'); /* Replace with the path to your image */
+    /* background-repeat: repeat;  /*Repeat the image vertically and horizontally */
+    /* background-size: cover;  /* Set the size of the repeated images */
+    /* Optional: Add other styles to customize the appearance */
+    /* background-color: #F4E98C; yellow*/
+    background-color: #76D7C4;
+    /*background-color: #3498DB;;*/
+  }
+
+.container-fluid{
+    padding: 0;
+}
