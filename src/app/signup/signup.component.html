@@ -38,7 +38,21 @@
                   [class.invalid]="signupForm.controls['phone'] && signupForm.controls['phone'].invalid && signupForm.controls['phone'].touched">
                   
                 </div>
-    
+
+                <div class="col-md-12">
+                  <label for="inputRegistrationType" class="form-label">I will be</label>
+                  <select id="inputRegistrationType" class="form-select" [(ngModel)]="user.user_type" name="resgistrationType">
+                    <option [ngValue]="0">Requesting Cleaning Services </option>
+                    <option [ngValue]="1">Providing Cleaning Services</option>
+                  </select>
+                </div>
+
+                <div class="col-12" *ngIf="user.user_type == 1">
+                  <label for="inputLocation" class="form-label">Location</label>
+                  <input type="text" class="form-control" id="inputLocation" name="location" [(ngModel)]="location" (focus)="getLocation()" readonly 
+                  [class.invalid]="signupForm.controls['location'] && signupForm.controls['location'].invalid && signupForm.controls['location'].touched">
+                </div>
+                
                 <div class="col-12">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="policyCheck">

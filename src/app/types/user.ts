@@ -7,6 +7,8 @@ export class User{
     updated_at: string = '';
     user_type: number = 0;
     password: string = '';
+    latitude: string = '';
+    longitude: string = '';
 
     constructor() {
         this.id = 0;
@@ -17,5 +19,7 @@ export class User{
         this.updated_at = '';
         this.user_type = 0;
         this.password = '';
+        this.latitude = '';
+        this.longitude = '';
     }
 }
