@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { BookComponent } from './book/book.component';
+import { FrequencyComponent } from './book/frequency/frequency.component';
 
 const routes: Routes = [
   {
@@ -16,6 +18,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'book',
+    loadChildren: () => import('./book/book.module').then(m => m.BookModule)
   }
 ];
 

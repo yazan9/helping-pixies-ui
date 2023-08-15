@@ -12,6 +12,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorInterceptor } from './services/auth-interceptor.interceptor';
+import { BookComponent } from './book/book.component';
+import { FrequencyComponent } from './book/frequency/frequency.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { AuthInterceptorInterceptor } from './services/auth-interceptor.intercep
     HomeComponent,
     NavbarComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    BookComponent,
+    FrequencyComponent
   ],
   imports: [
     BrowserModule,

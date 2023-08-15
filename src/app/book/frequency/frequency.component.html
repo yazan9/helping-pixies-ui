@@ -1,0 +1,41 @@
+<div class="auth-layout">
+    <div class="auth-box">
+        <div>
+            <h2>How many times would you like to get cleaning services?</h2>
+        </div>
+        <div class="mb-5">
+            <form class="row g-3" #frequencyForm="ngForm">
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioWeekly" [(ngModel)]="bookingService.selectedFrequency" value="weekly">
+                        <label class="form-check-label" for="radioWeekly">
+                          Weekly
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioTwiceWeek" [(ngModel)]="bookingService.selectedFrequency" value="twiceAWeek">
+                        <label class="form-check-label" for="radioTwiceWeek">
+                          Twice a week
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioEvTwoWeeks" [(ngModel)]="bookingService.selectedFrequency" value="everyTwoweeks">
+                        <label class="form-check-label" for="radioEvTwoWeeks">
+                          Once every two weeks
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioOnce" [(ngModel)]="bookingService.selectedFrequency" value="once">
+                        <label class="form-check-label" for="radioOnce">
+                          Only once
+                        </label>
+                      </div>
+                </div>                                
+    
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary" [disabled]="!bookingService.selectedFrequency" (click)="next()">Next</button>
+                </div>
+              </form>
+        </div>
+    </div>
+</div>
