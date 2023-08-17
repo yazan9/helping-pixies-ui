@@ -1,0 +1,65 @@
+<div>
+    <h3>
+        Booking Summary
+    </h3>
+    <hr>
+    <table>
+        <tr>
+            <td>
+                Frequency
+            </td>
+            <td>
+                {{ bookingService.selectedFrequency }}
+            </td>
+        </tr>
+
+        <tr *ngIf = "this.advnancedView">
+            <td>
+                Every
+            </td>
+            <td>
+                {{ selectedDays() }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                {{ this.advnancedView ? 'Hours per visit' : 'Hours'}}
+            </td>
+            <td>
+                {{ bookingService.selectedHours }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                {{ this.advnancedView ? 'Start Date' : 'Date'}}
+            </td>
+            <td>
+                {{ getStartDate() | date:'dd/MM/yyyy' }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Time
+            </td>
+            <td>
+                {{ bookingService.getSelectedDate() | date:'shortTime'}}
+            </td>
+        </tr>
+    </table>
+    <hr>
+
+    <table>
+        <tr>
+            <td>
+                TOTAL
+            </td>
+            <td>
+               ${{ bookingService.priceAsNumber() * bookingService.selectedHours | number:'.2'}}
+            </td>
+        </tr>
+    </table>
+    
+</div>

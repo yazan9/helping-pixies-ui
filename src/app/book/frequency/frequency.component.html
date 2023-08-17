@@ -7,25 +7,26 @@
             <form class="row g-3" #frequencyForm="ngForm">
                 <div class="col-12">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioWeekly" [(ngModel)]="bookingService.selectedFrequency" value="weekly">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioWeekly" [(ngModel)]="bookingService.selectedFrequency" [value]="FrequencyType.once_a_week">
+
                         <label class="form-check-label" for="radioWeekly">
                           Weekly
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioTwiceWeek" [(ngModel)]="bookingService.selectedFrequency" value="twiceAWeek">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioTwiceWeek" [(ngModel)]="bookingService.selectedFrequency" [value]="FrequencyType.twice_a_week">
                         <label class="form-check-label" for="radioTwiceWeek">
                           Twice a week
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioEvTwoWeeks" [(ngModel)]="bookingService.selectedFrequency" value="everyTwoweeks">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioEvTwoWeeks" [(ngModel)]="bookingService.selectedFrequency" [value]="FrequencyType.once_every_two_weeks">
                         <label class="form-check-label" for="radioEvTwoWeeks">
                           Once every two weeks
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioOnce" [(ngModel)]="bookingService.selectedFrequency" value="once">
+                        <input class="form-check-input" type="radio" name="frequencyChoice" id="radioOnce" [(ngModel)]="bookingService.selectedFrequency" [value]="FrequencyType.once">
                         <label class="form-check-label" for="radioOnce">
                           Only once
                         </label>

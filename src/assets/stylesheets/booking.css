@@ -1,0 +1,21 @@
+.booking-layout{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5rem 0;
+}
+
+.booking-box{
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;   
+    width:100%;
+}
+
+.booking-sidebar-container{
+    height: 100%;
+}
+
+.booking-summary-sidebar-container{
+    width: 100%;
+}

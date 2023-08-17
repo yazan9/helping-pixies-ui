@@ -1,0 +1,21 @@
+  /* Styles to make the table 100% width */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table td{
+    padding: 8px 0;
+  }
+  
+  /* Align first column contents to the left and give a specific width */
+  table td:first-child {
+    text-align: left;
+    width: 50%;  /* You can adjust this percentage based on your preference */
+    font-weight: bold;
+  }
+  
+  /* Align second column contents to the right */
+  table td:last-child {
+    text-align: right;
+  }

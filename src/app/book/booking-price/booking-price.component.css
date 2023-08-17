@@ -1,0 +1,23 @@
+.range-selector-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.round-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    text-align: center;
+    /* font-size: 1.5rem; */
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.input-75px {
+    width: 75px;
+    margin: 0 5px;
+}

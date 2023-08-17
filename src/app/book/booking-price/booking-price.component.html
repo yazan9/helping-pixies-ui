@@ -1,0 +1,19 @@
+<h3>Price</h3>
+<hr>
+<p>Set the price per hour for your service</p>
+<div class="range-selector-container">
+    <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons-->
+
+    <button class="btn btn-dark round-button" (click)="updatePrice(-0.5)">
+        -
+    </button>
+
+    <div>
+        <input type="price" class="form-control input-75px" id="priceInput" name="price"
+            [(ngModel)]="bookingService.price">
+    </div>
+
+    <button class="btn btn-dark round-button" (click)="updatePrice(0.5)">
+        +
+    </button>
+</div>

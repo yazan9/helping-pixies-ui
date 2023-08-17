@@ -1,0 +1,67 @@
+<div class="booking-layout">
+    <div class="booking-box me-3 w-50">
+        <div class="mb-4">
+            <h2>When would you like to start?</h2>
+        </div>
+        <div class="mb-5">
+            <form class="row g-3" #bookingForm="ngForm">
+                <div class="col-12">
+                    <label for="inputHours" class="form-label">Number of hours</label>
+                    <select id="inputHours" class="form-select" required [(ngModel)]="bookingService.selectedHours" name="hours">
+                        <option value="" disabled selected>Choose...</option>
+                        <option *ngFor="let availableHour of bookingService.availableHours" [value]="availableHour">{{availableHour}}</option>
+                    </select>
+                </div> 
+                
+                <div class="col-12">
+                    <div class="mb-4">
+                        <h2>Which day would you like to start?</h2>
+                    </div>
+                    <div *ngIf="!showRangeDatePicker; else rangeSelection">
+                        <ngb-datepicker #dp [(ngModel)]="bookingService.dateStruct" (navigate)="bookingService.selectedDate = $event.next" name="selectedDate"></ngb-datepicker>
+                    </div>
+                    <ng-template #rangeSelection>
+                        <div>
+                            <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+                            </ngb-datepicker>
+                            
+                            <ng-template #t let-date let-focused="focused">
+                                <span
+                                    class="custom-day"
+                                    [class.focused]="focused"
+                                    [class.range]="isRange(date)"
+                                    [class.faded]="isHovered(date) || isInside(date)"
+                                    (mouseenter)="hoveredDate = date"
+                                    (mouseleave)="hoveredDate = null"
+                                >
+                                    {{ date.day }}
+                                </span>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                    
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-4">
+                        <h2>What time day would you like to start?</h2>
+                    </div>
+                    <div>
+                        <ngb-timepicker [(ngModel)]="bookingService.selectedTime" [meridian]="true" name="selectedTime"></ngb-timepicker>
+                    </div>
+                    
+                </div>
+    
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-dark me-2" (click)="location.back()">Previous</button>
+                    <button type="submit" class="btn btn-dark" [disabled]="!bookingService.selectedFrequency" (click)="next()">Next</button>
+                </div>
+
+              </form>
+        </div>
+    </div>
+    <div class="booking-sidebar-container">
+        <app-booking-sidebar></app-booking-sidebar>
+        
+    </div>
+</div>
