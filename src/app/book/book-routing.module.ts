@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FrequencyComponent } from './frequency/frequency.component';
 import { MainComponent } from './main/main.component';
 import { BookComponent } from './book.component';
+import { BookingSearchComponent } from './booking-search/booking-search.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'main',
         component: MainComponent
+      },
+      {
+        path: 'search',
+        component: BookingSearchComponent
       }
     ]
   }

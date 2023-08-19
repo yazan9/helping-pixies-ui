@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FrequencyType } from '../types/frequency-type';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,14 @@ export class BookingService {
   startDate: Date | null = null;
   endDate: Date | null = null;
 
-  private _price: number = 35;
+  zipCode: string = 'V9C0R3';
 
-  constructor(private calendar: NgbCalendar) { 
+  private _price: number = 35;
+  private _latitude: number = 0;
+  private _longitude: number = 0;
+  public radius: number = 5;
+
+  constructor(private calendar: NgbCalendar, private http: HttpClient) { 
     this.dateStruct = this.calendar.getToday();
     this.selectedDate = {
       year: this.dateStruct.year,
@@ -49,5 +56,22 @@ export class BookingService {
 
   public priceAsNumber(){
     return this._price;
+  }
+
+  public updateLocation(latitude: number, longitude: number){
+    this._latitude = latitude;
+    this._longitude = longitude;
+
+    //do something with the location
+    //this.zipCode = value;
+  }
+
+  public searchProviders(page: number): Observable<any>{
+    //call the api to get the providers
+    //TODO: remove
+    this._latitude = 48.4284;
+    this._longitude = -123.3656;
+
+    return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}`);
   }
 }

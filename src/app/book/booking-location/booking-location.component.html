@@ -1,0 +1,10 @@
+<h3>Location</h3>
+<hr>
+<p>We have identified your location as:</p>
+<div class="range-selector-container">
+    <div class="d-flex">
+        <input type="zip" class="form-control me-2" id="zipInput" name="zip"
+            [(ngModel)]="bookingService.zipCode">
+        <button type="button" class="btn btn-dark" (click)="updateLocation()">Update</button>
+    </div>
+</div>

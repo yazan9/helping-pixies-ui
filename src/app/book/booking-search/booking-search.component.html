@@ -1,0 +1,53 @@
+<div class="booking-layout">
+    <div class="booking-box me-3">
+        <div class="mb-4">
+            <h3>Searching within {{bookingService.radius}} kilometers from the center of {{bookingService.zipCode}}</h3>
+        </div>
+
+        <div class="mb-5">
+            <form class="row g-3" #filtersForm="ngForm">
+                <div class="col-12">
+                    <label for="customRange3" class="form-label">Search within: {{radius}} km</label>
+                    <input type="range" class="form-range" min="1" max="50" step="1" id="radiusInput" name="radius" [(ngModel)]="radius">
+                </div>
+            </form>
+        </div>
+
+        <div class="mb-5">
+            <button type="button" class="btn btn-primary" (click)="updateData()">Update</button>
+        </div>
+
+        <div class="mb-5 row">
+            <div *ngFor="let provider of providers" class="provider-container col-sm-12 col-md-6 p-3 g-3">
+                <div class="card p-3">
+                    <h6>
+                        {{ provider.name }}
+                    </h6>
+                    <p>
+                        {{ provider.distance }}
+                    </p>
+                    <p>
+                        {{ provider.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="mb-5 row">
+            <nav>
+                <ul class="pagination">
+                  <li class="page-item" [class.disabled]="meta?.prev == null">
+                    <button class="page-link" href="#" (click)="changePage(meta?.prev ?? null)">Previous</button>
+                  </li>
+                  <li *ngFor="let page of getPagesArray(meta?.pages ?? null)" class="page-item" [class.active]="page == meta!.page">
+                    <button class="page-link" href="#" (click)="changePage(page)">{{ page }}</button>
+                  </li>
+                  <li class="page-item" [class.disabled]="meta?.next === null">
+                    <button class="page-link" href="#" (click)="changePage(meta!.next)">Next</button>
+                  </li>
+                </ul>
+              </nav>
+            
+        </div>
+    </div>
+    
+</div>

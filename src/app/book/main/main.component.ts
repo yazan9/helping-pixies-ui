@@ -74,7 +74,7 @@ export class MainComponent implements OnInit {
 	}
 
   public next(){
-    
+    this.router.navigate(['/book/search']);
   }
 
 }

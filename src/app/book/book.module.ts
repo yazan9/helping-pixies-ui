@@ -9,6 +9,8 @@ import { NgbDatepicker, NgbTimepicker } from '@ng-bootstrap/ng-bootstrap';
 import { BookingSidebarComponent } from './booking-sidebar/booking-sidebar.component';
 import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 import { BookingPriceComponent } from './booking-price/booking-price.component';
+import { BookingLocationComponent } from './booking-location/booking-location.component';
+import { BookingSearchComponent } from './booking-search/booking-search.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { BookingPriceComponent } from './booking-price/booking-price.component';
     FrequencyComponent,
     BookingSidebarComponent,
     BookingSummaryComponent,
-    BookingPriceComponent
+    BookingPriceComponent,
+    BookingLocationComponent,
+    BookingSearchComponent
   ],
   imports: [
     CommonModule,
