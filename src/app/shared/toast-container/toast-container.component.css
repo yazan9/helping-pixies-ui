@@ -1,0 +1,8 @@
+.toasts-container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    width: 300px;
+    margin: 20px;
+}

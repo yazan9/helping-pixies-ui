@@ -24,10 +24,22 @@
                         {{ provider.name }}
                     </h6>
                     <p>
-                        {{ provider.distance }}
+                        {{ provider.distance < 1 ? "Less than 1 km from you" : provider.distance + " km from you"}}
+                    </p>
+                    <p>
+                        <ngb-rating [(rate)]="provider.average_rating"></ngb-rating>
+                        {{ provider.average_rating }}
+                        <!-- <ngb-rating [(rate)]="provider.average_rating">
+                            <ng-template let-fill="fill" let-index="index">
+                                <i class="bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100" [class.low]="index < 3"></i>
+                            </ng-template>
+                        </ngb-rating> -->
                     </p>
                     <p>
                         {{ provider.description }}
+                    </p>
+                    <p>
+                        <button (click)="open(provider.id)" class="btn btn-primary">Book</button>
                     </p>
                 </div>
             </div>

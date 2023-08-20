@@ -12,6 +12,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorInterceptor } from './services/auth-interceptor.interceptor';
+import { ToastContainerComponent } from './shared/toast-container/toast-container.component';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { AuthInterceptorInterceptor } from './services/auth-interceptor.intercep
     HomeComponent,
     NavbarComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ToastContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { AuthInterceptorInterceptor } from './services/auth-interceptor.intercep
     FormsModule,
     RouterModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbToastModule
   ],
   providers: [
     AuthInterceptorInterceptor,

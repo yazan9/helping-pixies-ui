@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{provider.name}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body d-flex flex-column">
+    <p>
+        {{ provider.distance < 1 ? "Less than 1 km from you" : provider.distance + " km from you"}}
+    </p>
+    <p>
+        <ngb-rating [(rate)]="provider.average_rating"></ngb-rating>
+        {{ provider.average_rating }}
+    </p>
+    <p>
+        {{ provider.description }}
+    </p>
+
+    <div class="mb-5">
+        <app-booking-summary></app-booking-summary>
+        <div class="d-flex align-items-center justify-content-end">
+            <button type="button" class="btn btn-primary" (click)="book()">Book</button>
+        </div>
+    </div>
+
+    <div class="flex-grow-1">
+        <div *ngFor="let review of reviews">
+            <p>
+                <ngb-rating [(rate)]="review.rating"></ngb-rating>
+                {{ review.rating }}
+            </p>
+            <p>
+                {{ review.content }}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
+</div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/services/booking.service';
 import { Meta } from 'src/app/types/meta';
 import { Provider } from 'src/app/types/provider';
+import { ProviderDetailsModalComponent } from '../provider-details-modal/provider-details-modal.component';
 
 @Component({
   selector: 'app-booking-search',
@@ -13,11 +15,13 @@ export class BookingSearchComponent implements OnInit{
   public radius: number = 0;
   public meta: Meta | null = null;
 
-  constructor(public bookingService: BookingService) { }
+  constructor(public bookingService: BookingService, private config: NgbRatingConfig, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.radius = this.bookingService.radius;
     this.fetchData(1);
+
+    this.config.max = 5;
   }
 
   getPagesArray(num: number | null): number[] {
@@ -55,4 +59,8 @@ export class BookingSearchComponent implements OnInit{
     });
   }
 
+  open(providerId: number) {
+		const modalRef = this.modalService.open(ProviderDetailsModalComponent, {fullscreen: true, scrollable: true});
+		modalRef.componentInstance.provider = this.providers.find((provider) => provider.id === providerId);
+	}
 }

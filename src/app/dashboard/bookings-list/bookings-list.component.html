@@ -1,0 +1,37 @@
+<p>You can introduce custom directives for table headers to sort columns</p>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col" sortable="frequency" (sort)="onSort($event)">Frequency</th>
+			<th scope="col" sortable="start_date" (sort)="onSort($event)">Start Date</th>
+			<th scope="col" sortable="start_time" (sort)="onSort($event)">Start Time</th>
+            <th scope="col">Provider</th>
+            <th scope="col" sortable="rate" (sort)="onSort($event)">Hourly Rate</th>
+            <th scope="col">Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let booking of bookings">
+			<th scope="row">{{ booking.id }}</th>
+			<td>
+				{{ booking.frequency }}
+			</td>
+			<td>{{ booking.start_date }}</td>
+			<td>{{ booking.start_time }}</td>
+            <td>{{ booking.provider.name }}</td>
+            <td>{{ booking.rate }}</td>
+            <td>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      Active
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Cancel</a></li>
+                    </ul>
+                  </div>
+            </td>
+		</tr>
+	</tbody>
+</table>
