@@ -28,7 +28,12 @@ export class LoginComponent implements OnInit{
     this.authService.login(this.user).subscribe((response:TokenResponse) => {
       this.storageService.setItemToLocalStorage('hp-token', response.jwt_token);
       this.storageService.setItemToLocalStorage('hp-user', JSON.stringify(response.user));
-      this.router.navigate(['/dashboard']);
+      if(response.user.user_type == 'provider'){
+        this.router.navigate(['/provider']);
+      }
+      else{
+        this.router.navigate(['/dashboard']);
+      }
     }, err =>{
       console.log(err);
       if(err.status == 401){

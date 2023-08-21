@@ -5,7 +5,7 @@ export class User{
     phone: string = '';
     created_at: string = '';
     updated_at: string = '';
-    user_type: number = 0;
+    user_type: string = '';
     password: string = '';
     latitude: string = '';
     longitude: string = '';
@@ -17,7 +17,7 @@ export class User{
         this.phone = '';
         this.created_at = '';
         this.updated_at = '';
-        this.user_type = 0;
+        this.user_type = 'client';
         this.password = '';
         this.latitude = '';
         this.longitude = '';
