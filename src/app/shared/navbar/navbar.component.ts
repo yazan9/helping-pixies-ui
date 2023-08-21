@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/types/user';
 
@@ -7,13 +8,32 @@ import { User } from 'src/app/types/user';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit, OnDestroy{
   public isLoggedIn: boolean = false;
-  public user: User | null = null;
-  constructor(private authService: AuthService) { }
+  private subscriptions: Subscription[] = [];
+
+  user: User | null = null;
+  
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-    this.user = this.authService.getUser();
+    this.subscriptions.push(
+      this.authService.isLoggedIn.subscribe((loggedIn) => {
+        this.isLoggedIn = loggedIn;
+      })
+    );
+    this.subscriptions.push(
+      this.authService.userObservable.subscribe((user) => {
+        this.user = user;
+      })
+    );
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

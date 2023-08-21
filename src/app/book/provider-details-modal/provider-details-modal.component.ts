@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookingService } from 'src/app/services/booking.service';
 import { ReviewsService } from 'src/app/services/reviews.service';
@@ -21,6 +22,9 @@ export class ProviderDetailsModalComponent implements OnInit {
     average_rating: 0
   }
 
+  public isLoggedIn: boolean = false;
+  private subscriptions: Subscription[] = [];
+
   public reviews: Review[] = [];
   
   constructor(
@@ -32,6 +36,12 @@ export class ProviderDetailsModalComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.authService.isLoggedIn.subscribe((loggedIn) => {
+        this.isLoggedIn = loggedIn;
+      })
+    );
+
     this.reviewsService.getReviewsForProvider(this.provider.id).subscribe((response) => {
       let reviews = response;
       
@@ -45,7 +55,7 @@ export class ProviderDetailsModalComponent implements OnInit {
   }
 
   book(): void {
-    if(!this.authService.isLoggedIn()){
+    if(!this.isLoggedIn){
       this.router.navigate(['/login']);
       this.modal.close();
     }

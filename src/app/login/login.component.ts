@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../types/user';
 import { TokenResponse } from '../types/token-response';
-import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
 import { Router } from '@angular/router';
 
@@ -14,7 +13,6 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit{
   constructor(
     private authService: AuthService, 
-    private storageService: StorageService,
     private toastService: ToastService,
     private router: Router
     ){}
@@ -26,8 +24,6 @@ export class LoginComponent implements OnInit{
 
   public login(){
     this.authService.login(this.user).subscribe((response:TokenResponse) => {
-      this.storageService.setItemToLocalStorage('hp-token', response.jwt_token);
-      this.storageService.setItemToLocalStorage('hp-user', JSON.stringify(response.user));
       if(response.user.user_type == 'provider'){
         this.router.navigate(['/provider']);
       }
