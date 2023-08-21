@@ -1,6 +1,7 @@
 import { Component, Directive, EventEmitter, Input, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/services/booking.service';
+import { FrequencyType } from 'src/app/types/frequency-type';
 import { Provider } from 'src/app/types/provider';
 
 interface Booking {
@@ -51,6 +52,7 @@ export class NgbdSortableHeader {
 export class BookingsListComponent implements OnInit{
   bookings: Booking[] = [];
   originalBookings: Booking[] = [];
+  FrequencyType = FrequencyType;
 
 	@ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
@@ -106,5 +108,9 @@ export class BookingsListComponent implements OnInit{
       });
     }
 	}
+
+  public getFrequency(frequency: string): string {
+    return FrequencyType[frequency as keyof typeof FrequencyType];
+  }
 }
 

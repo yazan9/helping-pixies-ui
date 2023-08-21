@@ -5,7 +5,18 @@
         Helping Pixies
       </a>
       <div class="d-flex">
-        <a class="btn btn-link me-2" href="/signup" role="button">Login</a>
+        <a *ngIf="!isLoggedIn; else profile" class="btn btn-link me-2" href="/login" role="button">Login</a>
+        <ng-template #profile>
+          <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user?.name }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </div>
+        </ng-template>
       </div>
     </div>
   </nav>

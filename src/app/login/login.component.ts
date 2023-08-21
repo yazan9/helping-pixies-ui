@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit{
   public login(){
     this.authService.login(this.user).subscribe((response:TokenResponse) => {
       this.storageService.setItemToLocalStorage('hp-token', response.jwt_token);
-      this.storageService.setItemToLocalStorage('user', JSON.stringify(response.user));
+      this.storageService.setItemToLocalStorage('hp-user', JSON.stringify(response.user));
       this.router.navigate(['/dashboard']);
     }, err =>{
       console.log(err);

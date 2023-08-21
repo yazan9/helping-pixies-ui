@@ -14,7 +14,7 @@
 	<tbody>
 		<tr *ngFor="let booking of bookings">
 			<td>
-				{{ booking.frequency }}
+				{{ getFrequency(booking.frequency) }}
 			</td>
 			<td>{{ booking.start_at | date:'dd MMM y'}}</td>
 			<td>{{ booking.start_at | date:'h:mm a'}}</td>

@@ -19,6 +19,14 @@ export class AuthService {
     return this.http.post<TokenResponse>(`users/sign_in`, {user: user});
   }
 
+  public getUser(): User | null {
+    let user = this.sotrageService.getItemFromLocalStorage('hp-user');
+    if (user) {
+      return JSON.parse(user);
+    }
+    return null;
+  }
+
   public isLoggedIn(): boolean {
     // Check if a token exists in local storage
     const token = this.sotrageService.getItemFromLocalStorage('hp-token');
