@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
+import { BookingService } from 'src/app/services/booking.service';
 import { ReviewsService } from 'src/app/services/reviews.service';
 import { Provider } from 'src/app/types/provider';
 import { Review } from 'src/app/types/review';
@@ -26,7 +27,8 @@ export class ProviderDetailsModalComponent implements OnInit {
     public modal:NgbActiveModal, 
     public reviewsService: ReviewsService, 
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private bookingService: BookingService
     ) { }
 
   ngOnInit(): void {
@@ -48,8 +50,13 @@ export class ProviderDetailsModalComponent implements OnInit {
       this.modal.close();
     }
     else{
-      this.router.navigate(['/dashboard']);
-      this.modal.close();
+      this.bookingService.bookProvider(this.provider.id).subscribe((response) => {
+        this.router.navigate(['/dashboard']);
+        this.modal.close();
+      }, (error) => {
+        alert('Error booking provider');
+      });
+      
     }
   }
 }

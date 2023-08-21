@@ -1,51 +1,18 @@
-import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BookingService } from 'src/app/services/booking.service';
 import { Provider } from 'src/app/types/provider';
 
 interface Booking {
 	id: number;
-  start_date: string;
-  start_time: string;
+  start_at: string;
   provider: Provider;
   frequency: string;
   status: string;
   rate: number;
 }
 
-const BOOKINGS: Booking[] = [
-	{
-		id: 1,
-    start_date: '2021-01-01',
-    start_time: '10:00',
-    provider: {
-      id: 1,
-      name: 'Brandy',
-      description: 'something',
-      distance: 1,
-      average_rating: 5
-    },
-    frequency: 'Weekly',
-    status: 'Active',
-    rate: 35
-  },
-		
-	{
-		id: 2,
-    start_date: '2021-01-01',
-    start_time: '10:00',
-    provider: {
-      id: 1,
-      name: 'Keila',
-      description: 'something',
-      distance: 1,
-      average_rating: 5
-    },
-    frequency: 'Weekly',
-    status: 'Active',
-    rate: 35
-  }
-];
-
-type SortableFields = 'id' | 'start_date' | 'start_time' | 'frequency' | 'status' | 'rate';
+type SortableFields = 'id' | 'start_at' | 'start_at' | 'frequency' | 'status' | 'rate';
 export type SortColumn = SortableFields | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = { asc: 'desc', desc: '', '': 'asc' };
@@ -81,11 +48,43 @@ export class NgbdSortableHeader {
   templateUrl: './bookings-list.component.html',
   styleUrls: ['./bookings-list.component.css']
 })
-export class BookingsListComponent {
-  bookings = BOOKINGS;
+export class BookingsListComponent implements OnInit{
+  bookings: Booking[] = [];
+  originalBookings: Booking[] = [];
 
 	@ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
+
+  @ViewChild('cancelConfirmation') cancelConfirmation!: TemplateRef<any>;
+
+
+  constructor(private bookingService: BookingService, private modalService: NgbModal) { }
+
+  ngOnInit(): void {
+    this.fetchBookings();
+  }
+
+  fetchBookings(): void {
+    this.bookingService.getBookings().subscribe((response) => {
+      this.bookings = response;
+    }, (error) => {
+      alert('Error fetching bookings');
+    });
+  }
+
+  cancelBooking(bookingId: number): void {
+    const modalRef = this.modalService.open(this.cancelConfirmation);
+    modalRef.result.then((result) => {
+      console.log(result);
+      if (result === 'Yes') {
+        this.bookingService.cancelBooking(bookingId).subscribe((response) => {
+          this.fetchBookings();
+        }, (error) => {
+          alert('Error cancelling booking');
+        });
+      }
+    });
+  }
 
 	onSort({ column, direction }: SortEvent) {
 		// resetting other headers
@@ -97,9 +96,9 @@ export class BookingsListComponent {
 
 		// sorting countries
 		if (direction === '' || column === '') {
-      this.bookings = BOOKINGS;
+      this.bookings = this.originalBookings;
     } else {
-      this.bookings = [...BOOKINGS].sort((a, b) => {
+      this.bookings = this.bookings.sort((a, b) => {
         const valueA = a[column as SortableFields]; // TypeScript will now allow this
         const valueB = b[column as SortableFields]; // TypeScript will now allow this
         const res = compare(valueA, valueB);

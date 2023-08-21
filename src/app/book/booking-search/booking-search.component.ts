@@ -4,6 +4,7 @@ import { BookingService } from 'src/app/services/booking.service';
 import { Meta } from 'src/app/types/meta';
 import { Provider } from 'src/app/types/provider';
 import { ProviderDetailsModalComponent } from '../provider-details-modal/provider-details-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-search',
@@ -15,9 +16,17 @@ export class BookingSearchComponent implements OnInit{
   public radius: number = 0;
   public meta: Meta | null = null;
 
-  constructor(public bookingService: BookingService, private config: NgbRatingConfig, private modalService: NgbModal) { }
+  constructor(
+    public bookingService: BookingService, 
+    private config: NgbRatingConfig, 
+    private modalService: NgbModal,
+    private router: Router) { }
 
   ngOnInit(): void {
+    if(!this.bookingService.selectedFrequency){
+      this.router.navigate(['/book']);
+      return;
+    }
     this.radius = this.bookingService.radius;
     this.fetchData(1);
 

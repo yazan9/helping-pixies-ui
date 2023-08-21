@@ -31,7 +31,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.bookingService.selectedFrequency){
-      //this.router.navigate(['/book'])
+      this.router.navigate(['/book'])
     }
 	this.setShowRangeDatePicker();
   }

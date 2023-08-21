@@ -3,6 +3,7 @@ import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap'
 import { FrequencyType } from '../types/frequency-type';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Booking } from '../types/booking';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +74,29 @@ export class BookingService {
     this._longitude = -123.3656;
 
     return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}`);
+  }
+
+  private getFrequencyKey(value: FrequencyType | null): string {
+    if (value === null) return '';
+    return Object.keys(FrequencyType).find(key => FrequencyType[key as keyof typeof FrequencyType] === value) || '';
+  }
+
+  public bookProvider(providerId: number): Observable<any>{
+    let booking: Booking = new Booking();
+    booking.provider_id = providerId;
+    booking.start_at = this.getSelectedDate().toISOString();
+    booking.frequency = this.getFrequencyKey(this.selectedFrequency);
+    booking.rate = this._price;
+    booking.comments = '';
+
+    return this.http.post('bookings', booking);
+  }
+
+  public getBookings(): Observable<any>{
+    return this.http.get('bookings');
+  }
+
+  public cancelBooking(bookingId: number): Observable<any>{
+    return this.http.delete(`bookings/${bookingId}`);
   }
 }

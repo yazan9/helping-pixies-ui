@@ -3,10 +3,9 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th scope="col">#</th>
 			<th scope="col" sortable="frequency" (sort)="onSort($event)">Frequency</th>
-			<th scope="col" sortable="start_date" (sort)="onSort($event)">Start Date</th>
-			<th scope="col" sortable="start_time" (sort)="onSort($event)">Start Time</th>
+			<th scope="col" sortable="start_at" (sort)="onSort($event)">Start Date</th>
+			<th scope="col" sortable="start_at" (sort)="onSort($event)">Start Time</th>
             <th scope="col">Provider</th>
             <th scope="col" sortable="rate" (sort)="onSort($event)">Hourly Rate</th>
             <th scope="col">Status</th>
@@ -14,12 +13,11 @@
 	</thead>
 	<tbody>
 		<tr *ngFor="let booking of bookings">
-			<th scope="row">{{ booking.id }}</th>
 			<td>
 				{{ booking.frequency }}
 			</td>
-			<td>{{ booking.start_date }}</td>
-			<td>{{ booking.start_time }}</td>
+			<td>{{ booking.start_at | date:'dd MMM y'}}</td>
+			<td>{{ booking.start_at | date:'h:mm a'}}</td>
             <td>{{ booking.provider.name }}</td>
             <td>{{ booking.rate }}</td>
             <td>
@@ -28,10 +26,26 @@
                       Active
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Cancel</a></li>
+                      <li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">Cancel</a></li>
                     </ul>
                   </div>
             </td>
 		</tr>
 	</tbody>
 </table>
+
+<ng-template #cancelConfirmation let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">Cancel Booking</h4>
+	  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+	<div class="modal-body">
+	  <p>Are you sure you want to cancel this booking?</p>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Cancel')">Cancel</button>
+	  <button type="button" class="btn btn-danger" (click)="modal.close('Yes')">Yes, Cancel</button>
+	</div>
+  </ng-template>
