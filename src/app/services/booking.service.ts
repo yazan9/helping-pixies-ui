@@ -26,6 +26,7 @@ export class BookingService {
   private _latitude: number = 0;
   private _longitude: number = 0;
   public radius: number = 5;
+  public query: string = '';
 
   constructor(private calendar: NgbCalendar, private http: HttpClient) { 
     this.dateStruct = this.calendar.getToday();
@@ -73,7 +74,7 @@ export class BookingService {
     this._latitude = 48.4284;
     this._longitude = -123.3656;
 
-    return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}`);
+    return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}&query=${this.query}`);
   }
 
   private getFrequencyKey(value: FrequencyType | null): string {
@@ -98,5 +99,9 @@ export class BookingService {
 
   public cancelBooking(bookingId: number): Observable<any>{
     return this.http.delete(`bookings/${bookingId}`);
+  }
+
+  public acceptBooking(bookingId: number): Observable<any>{
+    return this.http.put(`bookings/${bookingId}/accept`, {});
   }
 }

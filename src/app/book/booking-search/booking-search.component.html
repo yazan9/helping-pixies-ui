@@ -14,6 +14,10 @@
         </div>
 
         <div class="mb-5">
+            <input type="text" class="form-control" placeholder="name, description..." id="searchInput" name="searchInput" [(ngModel)]="query">
+        </div>
+
+        <div class="mb-5">
             <button type="button" class="btn btn-primary" (click)="updateData()">Update</button>
         </div>
 

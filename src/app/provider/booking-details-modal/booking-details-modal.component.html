@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 class="modal-title">Booking Details</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Your booking details go here -->
+    <p>Provider ID: {{booking.provider_id}}</p>
+    <!-- More details... -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+  </div>

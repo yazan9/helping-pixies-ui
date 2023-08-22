@@ -53,6 +53,14 @@ export class AuthService {
     return null;
   }
 
+  public getUserType(): string {
+    let user = this.getUser();
+    if (user) {
+      return user.user_type;
+    }
+    return '';
+  }
+
   //private
   private setTokens(token: string): void {
     this.storageService.setItemToLocalStorage('hp-token', token);

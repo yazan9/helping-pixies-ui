@@ -1,3 +1,6 @@
+import { Client } from "./client";
+import { Provider } from "./provider";
+
 export class Booking{
     id: number;
     start_at: string;
@@ -6,6 +9,8 @@ export class Booking{
     status: string;
     rate: number;
     comments: string;
+    provider: Provider;
+    client: Client;
 
     constructor(){
         this.id = 0;
@@ -15,5 +20,7 @@ export class Booking{
         this.status = '';
         this.rate = 0;
         this.comments = '';
+        this.provider = new Provider();
+        this.client = new Client();
     }
 }

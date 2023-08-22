@@ -1,17 +1,9 @@
 import { Component, Directive, EventEmitter, Input, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/services/auth.service';
 import { BookingService } from 'src/app/services/booking.service';
+import { Booking } from 'src/app/types/booking';
 import { FrequencyType } from 'src/app/types/frequency-type';
-import { Provider } from 'src/app/types/provider';
-
-interface Booking {
-	id: number;
-  start_at: string;
-  provider: Provider;
-  frequency: string;
-  status: string;
-  rate: number;
-}
 
 type SortableFields = 'id' | 'start_at' | 'start_at' | 'frequency' | 'status' | 'rate';
 export type SortColumn = SortableFields | '';
@@ -59,11 +51,16 @@ export class BookingsListComponent implements OnInit{
 
   @ViewChild('cancelConfirmation') cancelConfirmation!: TemplateRef<any>;
 
+  public user_type = this.authService.getUserType();
 
-  constructor(private bookingService: BookingService, private modalService: NgbModal) { }
+  constructor(private bookingService: BookingService, private modalService: NgbModal, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.fetchBookings();
+  }
+
+  public capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   fetchBookings(): void {
@@ -111,6 +108,17 @@ export class BookingsListComponent implements OnInit{
 
   public getFrequency(frequency: string): string {
     return FrequencyType[frequency as keyof typeof FrequencyType];
+  }
+
+  public acceptBooking(bookingId: number): void {
+    this.bookingService.acceptBooking(bookingId).subscribe((response) => {
+      let booking = this.bookings.find(booking => booking.id === bookingId);
+      if (booking) {
+        booking.status = 'active';
+      }
+    }, (error) => {
+      alert('Error accepting booking');
+    });
   }
 }
 

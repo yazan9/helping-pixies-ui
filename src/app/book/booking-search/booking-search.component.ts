@@ -15,6 +15,7 @@ export class BookingSearchComponent implements OnInit{
   public providers: Provider[] = [];
   public radius: number = 0;
   public meta: Meta | null = null;
+  public query: string = '';
 
   constructor(
     public bookingService: BookingService, 
@@ -52,6 +53,7 @@ export class BookingSearchComponent implements OnInit{
 
   updateData(): void {
     this.bookingService.radius = this.radius;
+    this.bookingService.query = this.query;
     this.fetchData(1);
   }
 

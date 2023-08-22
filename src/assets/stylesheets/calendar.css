@@ -1,0 +1,15 @@
+.fc-daygrid-day-number {
+    color: grey !important;
+    cursor: pointer;
+}
+
+.fc-event-start {
+    background-color: #76D7C4;
+    color: black;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.fc-col-header-cell-cushion {
+    color: black;
+}
