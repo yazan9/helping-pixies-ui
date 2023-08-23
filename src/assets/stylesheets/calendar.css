@@ -4,12 +4,17 @@
 }
 
 .fc-event-start {
-    background-color: #76D7C4;
-    color: black;
+    background-color: grey;
+    color: beige;
     cursor: pointer;
     padding: 5px;
 }
 
 .fc-col-header-cell-cushion {
     color: black;
+}
+
+.fc-daygrid-event-dot{
+    border:unset;
+    margin:0;
 }

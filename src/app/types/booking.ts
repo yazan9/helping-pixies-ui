@@ -11,6 +11,7 @@ export class Booking{
     comments: string;
     provider: Provider;
     client: Client;
+    address: string;
 
     constructor(){
         this.id = 0;
@@ -22,5 +23,6 @@ export class Booking{
         this.comments = '';
         this.provider = new Provider();
         this.client = new Client();
+        this.address = '';
     }
 }

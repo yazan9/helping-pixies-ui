@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Calendar, CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/services/booking.service';
 import { Booking } from 'src/app/types/booking';
 import { BookingDetailsModalComponent } from '../booking-details-modal/booking-details-modal.component';
 import { FrequencyType } from 'src/app/types/frequency-type';
+import { Subscription } from 'rxjs';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { EventImpl } from '@fullcalendar/core/internal';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin]
@@ -20,42 +24,60 @@ export class DashboardComponent implements OnInit {
 
   public bookings:Booking[] = [];
   NUMBER_OF_WEEKS_TO_REPEAT = 10;
+  
+  private subscriptions: Subscription[] = [];
 
   constructor(private bookingService: BookingService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.fetchBookings();
+
+    const bookingAcceptedSubscription = this.bookingService.bookingAccepted$.subscribe(bookingId => {
+      let updatedBooking = this.bookings.find(booking => booking.id === bookingId);
+      if(updatedBooking){
+        updatedBooking.status = 'active';
+        this.updateCalendar(bookingId, 'active');
+      }
+    });
+    const bookingRejectedSubscription = this.bookingService.bookingRejected$.subscribe(bookingId => {
+      let updatedBooking = this.bookings.find(booking => booking.id === bookingId);
+      if(updatedBooking){
+        updatedBooking.status = 'cancelled';
+        this.updateCalendar(bookingId, 'cancelled');
+      }
+    });
+
+    this.subscriptions.push(bookingAcceptedSubscription);
+    this.subscriptions.push(bookingRejectedSubscription);    
   }
 
   handleDateClick(clickInfo: EventClickArg) {
-    console.log(clickInfo);
-    const booking: Booking = clickInfo.event.extendedProps as Booking;
+    const booking: Booking = this.bookings.find(booking => booking.id === parseInt(clickInfo.event.id))!;
     
     const modalRef = this.modalService.open(BookingDetailsModalComponent, { fullscreen: true } );
     modalRef.componentInstance.booking = booking;
-    console.log(booking);
+    modalRef.result.then((result) => {
+      if(result === 'accept'){
+        this.bookingService.acceptBooking(booking.id).subscribe((response) => {
+          alert('Booking accepted');
+        }, (error) => {
+          alert('Error accepting booking');
+        });
+      }
+      else if(result === 'reject'){
+        this.bookingService.rejectBooking(booking.id).subscribe((response) => {
+          alert('Booking rejected');
+        }, (error) => {
+          alert('Error rejecting booking');
+        });
+      }
+    });
   }
 
   fetchBookings(): void {
     this.bookingService.getBookings().subscribe((bookings: Booking[]) => {
-      const events: EventInput[] = [];
-
-      bookings.forEach(booking => {
-        const frequencyType = this.getFrequencyType(booking.frequency);
-        const repeatedBookings = this.repeatBooking(booking, frequencyType);
-        repeatedBookings.forEach(repeatedBooking => {
-          events.push({
-            id: repeatedBooking.id.toString(),
-            start: repeatedBooking.start_at,
-            title: `Booking!`, // You can customize the title
-            className: this.getClassForBooking(repeatedBooking),
-            // additional properties as needed...
-          });
-        });
-      });
-
-    this.calendarOptions.events = events;
-    this.calendarOptions.eventClick = this.handleDateClick.bind(this);
+      this.bookings = bookings;
+      this.renderCalendarWithBookings();
     }, (error) => {
       alert('Error fetching bookings');
     });
@@ -127,5 +149,38 @@ export class DashboardComponent implements OnInit {
         return 14;
     }
   }
-  
+
+  updateCalendar(bookingId: number, status: string): void {
+    let calendarApi:Calendar = this.calendarComponent.getApi();
+    calendarApi.removeAllEvents();
+    this.renderCalendarWithBookings();
+  }
+
+  renderCalendarWithBookings(){
+    const events: EventInput[] = [];
+
+    this.bookings.forEach(booking => {
+      const frequencyType = this.getFrequencyType(booking.frequency);
+      const repeatedBookings = this.repeatBooking(booking, frequencyType);
+      repeatedBookings.forEach(repeatedBooking => {
+        events.push({
+          id: repeatedBooking.id.toString(),
+          start: repeatedBooking.start_at,
+          title: repeatedBooking.client.name, // You can customize the title
+          className: this.getClassForBooking(repeatedBooking),
+          // additional properties as needed...
+        });
+      });
+    });
+
+    this.calendarOptions = {
+      ...this.calendarOptions,
+      events: events,
+      eventClick: this.handleDateClick.bind(this),
+    };
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
 }

@@ -6,9 +6,17 @@
   </div>
   <div class="modal-body">
     <!-- Your booking details go here -->
-    <p>Provider ID: {{booking.provider_id}}</p>
+    <p>{{booking.client.name}}</p>
+    Start: <p>{{ booking.start_at | date:'dd MMM yyyy @h:mm a' }}</p>
+    Frequency: <p>{{utils.getFrequencyType(booking.frequency)}}</p>
+    Status: <p>{{utils.capitalize(booking.status)}}</p>
+    Rate: <p>${{booking.rate}}/hr</p>
+    Comments: <p>{{booking.comments}}</p>
     <!-- More details... -->
   </div>
   <div class="modal-footer">
+    <button *ngIf="booking.status === 'pending'" type="button" class="btn btn-success" (click)="acceptBooking()">Accept Booking</button>
+    <button *ngIf="booking.status === 'pending'" type="button" class="btn btn-danger" (click)="rejectBooking()">Reject Booking</button>
+
     <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
   </div>

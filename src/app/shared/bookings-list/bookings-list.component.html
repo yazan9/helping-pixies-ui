@@ -26,10 +26,10 @@
 					[class.btn-warning]="booking.status == 'pending'"
 					[class.btn-danger]="booking.status == 'cancelled'"
 					data-bs-toggle="dropdown" aria-expanded="false">
-                      {{ capitalize(booking.status) }}
+                      {{ utils.capitalize(booking.status) }}
                     </button>
                     <ul class="dropdown-menu">
-						<li *ngIf="user_type === 'provider'"><a class="dropdown-item cursor-pointer" (click)="acceptBooking(booking.id)">Accept</a></li>
+						<li *ngIf="user_type === 'provider' && booking.status!=='active'"><a class="dropdown-item cursor-pointer" (click)="acceptBooking(booking.id)">Accept</a></li>
 						<li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">Cancel</a></li>
                     </ul>
                   </div>

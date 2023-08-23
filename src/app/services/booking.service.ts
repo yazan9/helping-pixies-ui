@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FrequencyType } from '../types/frequency-type';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { Booking } from '../types/booking';
 
 @Injectable({
@@ -27,6 +27,14 @@ export class BookingService {
   private _longitude: number = 0;
   public radius: number = 5;
   public query: string = '';
+
+  //Observable sources
+  private bookingAcceptedSubject = new Subject<number>();
+  private bookingRejectedSubject = new Subject<number>();
+
+  //Observable streams
+  bookingAccepted$ = this.bookingAcceptedSubject.asObservable();
+  bookingRejected$ = this.bookingRejectedSubject.asObservable();
 
   constructor(private calendar: NgbCalendar, private http: HttpClient) { 
     this.dateStruct = this.calendar.getToday();
@@ -101,7 +109,29 @@ export class BookingService {
     return this.http.delete(`bookings/${bookingId}`);
   }
 
+  public broadcastBookingAccepted(bookingId: number): void{
+    this.bookingAcceptedSubject.next(bookingId);
+  }
+
+  public broadcastBookingRejected(bookingId: number): void{
+    this.bookingRejectedSubject.next(bookingId);
+  }
+
   public acceptBooking(bookingId: number): Observable<any>{
-    return this.http.put(`bookings/${bookingId}/accept`, {});
+    return this.http.put(`bookings/${bookingId}/accept`, {})
+    .pipe(
+      tap(() => {
+        this.broadcastBookingAccepted(bookingId);
+      })
+    );
+  }
+
+  public rejectBooking(bookingId: number): Observable<any>{
+    return this.http.delete(`bookings/${bookingId}`, {})
+    .pipe(
+      tap(() => {
+        this.broadcastBookingRejected(bookingId);
+      }
+    ));
   }
 }

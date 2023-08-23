@@ -1,7 +1,9 @@
 import { Component, Directive, EventEmitter, Input, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookingService } from 'src/app/services/booking.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { Booking } from 'src/app/types/booking';
 import { FrequencyType } from 'src/app/types/frequency-type';
 
@@ -46,6 +48,8 @@ export class BookingsListComponent implements OnInit{
   originalBookings: Booking[] = [];
   FrequencyType = FrequencyType;
 
+  private subscriptions: Subscription[] = [];
+
 	@ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
 
@@ -53,14 +57,31 @@ export class BookingsListComponent implements OnInit{
 
   public user_type = this.authService.getUserType();
 
-  constructor(private bookingService: BookingService, private modalService: NgbModal, private authService: AuthService) { }
+  constructor(
+    private bookingService: BookingService, 
+    private modalService: NgbModal, 
+    private authService: AuthService,
+    public utils: UtilsService
+    ) { }
 
   ngOnInit(): void {
     this.fetchBookings();
-  }
 
-  public capitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    const bookingAcceptedSubscription = this.bookingService.bookingAccepted$.subscribe(bookingId => {
+      let updatedBooking = this.bookings.find(booking => booking.id === bookingId);
+      if(updatedBooking){
+        updatedBooking.status = 'active';
+      }
+    });
+
+    const bookingRejectedSubscription = this.bookingService.bookingRejected$.subscribe(bookingId => {
+      let updatedBooking = this.bookings.find(booking => booking.id === bookingId);
+      if(updatedBooking){
+        this.bookings = this.bookings.filter(booking => booking.id !== bookingId);
+      }
+    });
+
+    this.subscriptions.push(bookingAcceptedSubscription);
   }
 
   fetchBookings(): void {
