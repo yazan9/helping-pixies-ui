@@ -1,0 +1,21 @@
+@import '../../../assets/stylesheets/profile.css';
+
+.profile-picture .placeholder,
+.img-container {
+    width: 100px;
+    height: 100px;
+    background-color: #aaa;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover; /* This line ensures that the image covers the container without stretching or squishing */
+  }

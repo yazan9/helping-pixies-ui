@@ -5,6 +5,7 @@ import { TokenResponse } from '../types/token-response';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,21 +24,23 @@ export class AuthService {
   constructor(private http: HttpClient, private storageService: StorageService, private router: Router) { }
 
   public register(user: User) {
-    let base = this.http.post<TokenResponse>(`users`, {user: user});
-    base.pipe().subscribe((response: TokenResponse) => {
-      this.setTokens(response.jwt_token);
-      this.setUser(response.user);
-    });
-    return base;
+    return this.http.post<TokenResponse>(`users`, {user: user})
+    .pipe(
+      tap((res: TokenResponse) => {
+        this.setTokens(res.jwt_token);
+        this.setUser(res.user);
+      }
+    ));
   }
 
   public login(user: User) {
-    let base = this.http.post<TokenResponse>(`users/sign_in`, {user: user});
-    base.pipe().subscribe((response: TokenResponse) => {
-      this.setTokens(response.jwt_token);
-      this.setUser(response.user);
-    });
-    return base;
+    return this.http.post<TokenResponse>(`users/sign_in`, {user: user})
+    .pipe(
+      tap((res: TokenResponse) => {
+        this.setTokens(res.jwt_token);
+        this.setUser(res.user);
+      }
+    ));
   }
 
   public logout(): void {
@@ -61,16 +64,18 @@ export class AuthService {
     return '';
   }
 
+  public setUser(user: User){
+    this.storageService.setItemToLocalStorage('hp-user', JSON.stringify(user));
+    this.user.next(user);
+  }
+
   //private
   private setTokens(token: string): void {
     this.storageService.setItemToLocalStorage('hp-token', token);
     this.loggedIn.next(true);
   }
 
-  private setUser(user: User){
-    this.storageService.setItemToLocalStorage('hp-user', JSON.stringify(user));
-    this.user.next(user);
-  }
+  
 
   private removeTokensAndUser(): void {
     this.storageService.removeItemFromLocalStorage('hp-token');

@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="booking-layout">
+        <div class="booking-box me-3 w-50">
+            <h3>Public profile</h3>
+            <form (ngSubmit)="updateProfile()" class="row g-3">
+                <div class="col-12">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="user!.name" name="name">
+                </div>
+
+                <div class="col-12">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" [(ngModel)]="user!.email" name="email">
+                </div>
+
+                <div class="col-12">
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input type="tel" class="form-control" id="phone" [(ngModel)]="user!.phone" name="phone">
+                </div>
+                <!-- Add other fields as needed -->
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success">Update Profile</button>
+                </div>
+
+                
+            </form>
+        </div>
+        <div class="booking-box me-3 w-50">
+            <h3>Profile Picture</h3>
+            <div class="profile-picture" *ngIf="!profilePicture; else showPicture">
+                <div class="placeholder" (click)="openUploadDialog()">
+                    {{ user!.name.slice(0, 2) | uppercase }}
+                </div>
+            </div>
+            <ng-template #showPicture>
+                <div class="profile-picture">
+                    <img [src]="profilePicture" class="profile-picture" alt="Profile Picture" (click)="openUploadDialog()" />
+                </div>
+            </ng-template>
+            <input style="display:none;" type="file" (change)="onFileSelected($event)" #fileInput id="fileInput" accept="image/*">
+            
+            <button class="btn btn-primary mt-2" (click)="updateProfilePicture()">Update Picture</button>
+        </div>
+    </div>
+</div>
