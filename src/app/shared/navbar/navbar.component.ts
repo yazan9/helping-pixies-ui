@@ -13,6 +13,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
   private subscriptions: Subscription[] = [];
 
   user: User | null = null;
+
+  public conversations: any[] = [{name: 'test', description: 'test', id: 1}, {name: 'test2', description: 'test2', id: 2}];
   
   constructor(public authService: AuthService) { }
 

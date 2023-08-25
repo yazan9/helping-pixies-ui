@@ -9,6 +9,7 @@ export class User{
     password: string = '';
     latitude: string = '';
     longitude: string = '';
+    profile_image_url: string = '';
 
     constructor() {
         this.id = 0;

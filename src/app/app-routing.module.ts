@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path : 'profile',
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
+    path : 'conversations',
+    loadChildren: () => import('./conversations/conversations.module').then(m => m.ConversationsModule)
   }
 ];
 

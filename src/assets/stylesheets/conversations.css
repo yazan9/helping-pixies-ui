@@ -1,0 +1,20 @@
+@import './booking.css';
+
+.selected-conversation {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.message-from-me{
+    background-color: mintcream;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 5px;
+}
+
+.message-from-them{
+    background-color: beige;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 5px;
+}

@@ -5,18 +5,30 @@
         Helping Pixies
       </a>
       <div class="d-flex">
-        <a *ngIf="!isLoggedIn; else profile" class="btn btn-link me-2" href="/login" role="button">Login</a>
-        <ng-template #profile>
-          <div class="dropdown">
-            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ user?.name }}
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="/profile">Profile</a></li>
-              <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
-            </ul>
-          </div>
-        </ng-template>
+        
+        <div class="dropdown me-3">
+          <a class="btn btn-link" href="/conversations"><i class="fa fa-envelope"></i></a>
+          <span class="badge bg-danger unread-bage">{{ 1 }}</span>
+        </div>
+
+
+
+        <div>
+          <a *ngIf="!isLoggedIn; else profile" class="btn btn-link me-2" href="/login" role="button">Login</a>
+          <ng-template #profile>
+            <div class="">
+              <button class="btn btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user?.name }}
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+              </ul>
+            </div>
+          </ng-template>
+        </div>   
+        
+        
       </div>
     </div>
   </nav>

@@ -1,0 +1,6 @@
+<div class="message" [ngClass]="getMessageClassName(message)">
+    <div class="message__content">
+        <div class="message__text">{{message.content}}</div>
+        <div class="message__date form-text">{{message.created_at | date:'short'}}</div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="booking-box mt-3">
+    <div *ngIf="conversation?.messages?.length" class="mb-2">
+        <div *ngFor="let message of conversation?.messages" >
+            <app-message [message]="message"></app-message>
+        </div>
+        <div class="d-flex flex-row mt-5">
+            <input class="form-control me-2" [(ngModel)]="newMessage.content" name="NewMessageInput" id="NewMessageInput">
+
+            <button class="btn btn-success" (click)="sendMessage()"><i class="fa fa-send"></i></button>
+        </div>
+    </div>
+</div>

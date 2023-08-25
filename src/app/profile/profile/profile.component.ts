@@ -14,10 +14,15 @@ export class ProfileComponent {
 
   constructor(private authService: AuthService, private userService: UserService) {
     this.user = this.authService.getUser();
+    this.profilePicture = this.user?.profile_image_url as string;
   }
 
   updateProfile(): void {
-    // Logic to update the user profile goes here
+    this.userService.updateProfile(this.user as User).subscribe((response) => {
+      this.authService.setUser(response);
+      alert('Profile updated successfully');
+    }
+    );
   }
 
   onFileSelected(event: Event): void {

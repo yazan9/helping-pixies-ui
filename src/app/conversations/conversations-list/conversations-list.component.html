@@ -1,0 +1,7 @@
+<div class="booking-box mt-3">
+    <div class="conversation" *ngFor="let conversation of conversations">
+        <div [class.selected-conversation]="conversation.id === selectedConversation?.id">
+            <app-conversation [conversation]="conversation"></app-conversation>
+        </div>
+    </div>
+</div>

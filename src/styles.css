@@ -1,4 +1,6 @@
 @import './assets/stylesheets/calendar.css';
+@import '~font-awesome/css/font-awesome.css';
+
 /* You can add global styles to this file, and also import other style files */
 body {
     /* background-image: url('../src/assets/images/bubbles.jpg'); /* Replace with the path to your image */
@@ -7,6 +9,7 @@ body {
     /* Optional: Add other styles to customize the appearance */
     /* background-color: #F4E98C; yellow*/
     background-color: #76D7C4;
+    font-size: small;
     /*background-color: #3498DB;;*/
   }
 
@@ -17,5 +20,25 @@ body {
 .invalid{
     border-color: red;
 }
+
+.dropdown-item{
+    cursor: pointer;
+}
+
+.avatar-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc; /* You can choose a color that fits your design */
+  }
+  
+  
+  
+  
+  
+  
 
 

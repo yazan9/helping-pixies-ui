@@ -12,4 +12,8 @@ export class UserService {
   public updateProfileImage(userId: number, image: string): Observable<any> {
     return this.http.put<any>(`users/${userId}/profile_image`, { image });
   }
+
+  public updateProfile(user: any): Observable<any> {
+    return this.http.put<any>(`users/${user.id}`, { user: user });
+  }
 }
