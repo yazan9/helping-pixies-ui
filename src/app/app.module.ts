@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -14,6 +14,8 @@ import { AuthInterceptorInterceptor } from './services/auth-interceptor.intercep
 import { ToastContainerComponent } from './shared/toast-container/toast-container.component';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './shared/shared.module';
+import { PasswordValidator } from './directives/password-validator/password-validator.directive';
+import { PhoneInputComponent } from './phone-input/phone-input.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SharedModule } from './shared/shared.module';
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    ToastContainerComponent
+    ToastContainerComponent,
+    PasswordValidator,
+    PhoneInputComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,8 @@ import { SharedModule } from './shared/shared.module';
     CommonModule,
     HttpClientModule,
     NgbToastModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthInterceptorInterceptor,

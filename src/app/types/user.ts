@@ -5,22 +5,12 @@ export class User{
     phone: string = '';
     created_at: string = '';
     updated_at: string = '';
-    user_type: string = '';
+    user_type: string = 'client';
     password: string = '';
     latitude: string = '';
     longitude: string = '';
     profile_image_url: string = '';
+    postal_code: string = '';
 
-    constructor() {
-        this.id = 0;
-        this.email = '';
-        this.name = '';
-        this.phone = '';
-        this.created_at = '';
-        this.updated_at = '';
-        this.user_type = 'client';
-        this.password = '';
-        this.latitude = '';
-        this.longitude = '';
-    }
+    constructor(){}
 }

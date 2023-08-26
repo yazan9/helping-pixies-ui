@@ -5,39 +5,55 @@
             <p>Already have an account? <a href="/login">Login</a></p>
         </div>
         <div>
-            <form class="row g-3" #signupForm="ngForm">
+            <form class="row g-3" #signupForm="ngForm" autocomplete="off">
                 <div class="col-12">
-                  <label for="inputEmail" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="inputEmail" name="email" [(ngModel)]="user.email" required
-                  [class.invalid]="signupForm.controls['email'] && signupForm.controls['email'].invalid && signupForm.controls['email'].touched">
-                  
-                </div>
+                  <label for="inputEmail" class="form-label">Email*</label>
+                  <input type="email" class="form-control" id="inputEmail" name="email" [(ngModel)]="user.email" required #emailInput
+                  autocomplete="off"
+                  [class.invalid]="signupForm.controls['email'] && signupForm.controls['email'].invalid && signupForm.controls['email'].touched">                 
+                </div>               
+
                 <div class="col-12">
-                  <label for="inputPassword" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="inputPassword" name="password" [(ngModel)]="user.password" required
+                  <label for="inputPassword" class="form-label">Password*</label>
+                  <input type="password" class="form-control" id="inputPassword" name="password" #passwordInput
+                  autocomplete="off"
+                  [(ngModel)]="user.password" required validPassword
                   [class.invalid]="signupForm.controls['password'] && signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
-                  
-                </div>
-                <div class="col-12">
-                  <label for="inputName" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="user.name" required 
-                  [class.invalid]="signupForm.controls['name'] && signupForm.controls['name'].invalid && signupForm.controls['name'].touched">
-                  
+                  <div *ngIf="signupForm.controls['password'] && signupForm.controls['password'].invalid && signupForm.controls['password'].touched" class="text-danger">
+                    Password must be at least 6 characters and contain at least one number.
+                  </div>
                 </div>
                 
-                <div class="col-md-2">
+
+                <div class="col-12">
+                  <label for="inputName" class="form-label">Name*</label>
+                  <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="user.name" required 
+                  [class.invalid]="signupForm.controls['name'] && signupForm.controls['name'].invalid && signupForm.controls['name'].touched">                  
+                </div>
+
+                <div class="col-12">
+                  <div>
+                    <label for="inputPhone" class="form-label">Phone*</label>
+                  </div>
+                  <div>
+                    <app-phone-input (countryChanged)="countryChanged($event)" (phoneNumberChanged)="phoneNumberChanged($event)"></app-phone-input>
+                  </div>
+                </div>
+
+                
+                <!-- <div class="col-md-2">
                   <label for="inputCountryCode" class="form-label">Country Code</label>
                   <input type="text" class="form-control" id="inputCountryCode" name="countryCode" [(ngModel)]="countryCode" required
                   [class.invalid]="signupForm.controls['countryCode'] && signupForm.controls['countryCode'].invalid && signupForm.controls['countryCode'].touched">
                   
-                </div>
+                </div> -->
                 
-                <div class="col-md-10">
+                <!-- <div class="col-md-10">
                   <label for="inputPhoneNumber" class="form-label">Phone Number</label>
                   <input type="text" class="form-control" id="inputPhoneNumber" name="phone" [(ngModel)]="user.phone" required
                   [class.invalid]="signupForm.controls['phone'] && signupForm.controls['phone'].invalid && signupForm.controls['phone'].touched">
                   
-                </div>
+                </div> -->
 
                 <div class="col-md-12">
                   <label for="inputRegistrationType" class="form-label">I will be</label>
@@ -47,10 +63,18 @@
                   </select>
                 </div>
 
-                <div class="col-12" *ngIf="user.user_type === 'provider'">
+                <!-- <div class="col-12" *ngIf="user.user_type === 'provider'">
                   <label for="inputLocation" class="form-label">Location</label>
                   <input type="text" class="form-control" id="inputLocation" name="location" [(ngModel)]="location" (focus)="getLocation()" readonly 
                   [class.invalid]="signupForm.controls['location'] && signupForm.controls['location'].invalid && signupForm.controls['location'].touched">
+                </div> -->
+
+                <div class="col-12">
+                  <label for="inputName" class="form-label">Postal Code</label>
+                  <input type="text" class="form-control" id="inputLocation" name="location" [(ngModel)]="user.postal_code">     
+                  <div class="form-text">
+                    By sharing your postal code, you will be able to see services available in your area
+                  </div>             
                 </div>
                 
                 <div class="col-12">
@@ -72,7 +96,7 @@
                   </div>
     
                 <div class="col-12">
-                  <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid" (click)="signupClicked()">Sign up</button>
+                  <button type="button" class="btn btn-primary" (click)="signupClicked(signupForm)">Sign up</button>
                 </div>
               </form>
         </div>
