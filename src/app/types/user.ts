@@ -10,7 +10,7 @@ export class User{
     latitude: string = '';
     longitude: string = '';
     profile_image_url: string = '';
-    postal_code: string = '';
+    address: string = '';
 
     constructor(){}
 }

@@ -5,6 +5,8 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { BookComponent } from './book/book.component';
 import { FrequencyComponent } from './book/frequency/frequency.component';
+import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
 
 const routes: Routes = [
   {
@@ -18,6 +20,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
+  },
+  {
+    path: 'terms-of-service',
+    component: TermsOfServiceComponent
   },
   {
     path: 'book',

@@ -1,11 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  //Observable Sources
+  private phoneNumberValiditySource = new BehaviorSubject<boolean>(true);
+
+  //Observable Streams
+  phoneNumberInvalidSource$ = this.phoneNumberValiditySource.asObservable();
 
   constructor(private http:HttpClient) { }
 
@@ -15,5 +21,9 @@ export class UserService {
 
   public updateProfile(user: any): Observable<any> {
     return this.http.put<any>(`users/${user.id}`, { user: user });
+  }
+
+  public broadcastPhoneNumberValidity(isValid: boolean): void {
+    this.phoneNumberValiditySource.next(isValid);
   }
 }

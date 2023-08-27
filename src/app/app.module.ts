@@ -16,6 +16,8 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './shared/shared.module';
 import { PasswordValidator } from './directives/password-validator/password-validator.directive';
 import { PhoneInputComponent } from './phone-input/phone-input.component';
+import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PhoneInputComponent } from './phone-input/phone-input.component';
     LoginComponent,
     ToastContainerComponent,
     PasswordValidator,
-    PhoneInputComponent
+    PhoneInputComponent,
+    PrivacyPolicyComponent,
+    TermsOfServiceComponent
   ],
   imports: [
     BrowserModule,

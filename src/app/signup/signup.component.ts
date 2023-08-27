@@ -5,6 +5,11 @@ import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
 import { Country } from '../types/country';
 import { NgForm } from '@angular/forms';
+import { UserService } from '../services/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrivacyPolicyComponent } from '../static/privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from '../static/terms-of-service/terms-of-service.component';
+declare var google: any;
 
 @Component({
   selector: 'app-signup',
@@ -14,13 +19,25 @@ import { NgForm } from '@angular/forms';
 export class SignupComponent implements OnInit, AfterViewInit{
   public user: User = new User();
   public countryCode: string = '';
-  public location: string = '';
+
+  public address: string = '';
+  public postalCode: string = '';
+  public policyAgreed: boolean = false;
 
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
 
-  constructor(private authService: AuthService, private router: Router, private toastService: ToastService) {
-    
+  private addressAutocomplete: any;
+  private postalCodeAutoComplete: any;
+
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private toastService: ToastService,
+    private userService: UserService,
+    private modalService: NgbModal,
+    ) {
+      
   }
 
   ngOnInit(): void {
@@ -29,6 +46,13 @@ export class SignupComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit(): void {
     this.emailInput.nativeElement.focus();
+
+    this.initGoogleAddressAutoComplete();
+    this.initGooglePostalCodeAutoComplete();
+  }
+
+  registrationTypeChanged(){
+    
   }
 
   signupClicked(signupForm: NgForm): void {
@@ -36,10 +60,14 @@ export class SignupComponent implements OnInit, AfterViewInit{
       this.doSignUp();
     }
     else{
+      if(this.policyAgreed === false){
+        this.toastService.showError('Please agree to the terms and conditions');
+      }
       Object.keys(signupForm.controls).forEach(field => {
         const control = signupForm.controls[field];
         control.markAsTouched({ onlySelf: true });
       });
+      this.userService.broadcastPhoneNumberValidity(false);
       this.toastService.showError('Please fill all required fields');
     }
   }
@@ -51,8 +79,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
     }
 
     this.user.phone = this.countryCode + this.user.phone;
-    // this.user.latitude = this.location.split(',')[0];
-    // this.user.longitude = this.location.split(',')[1];
+    this.user.address = this.user.user_type === 'provider' ? this.postalCode : this.address;
 
     this.authService.register(this.user).subscribe((response) => {
       //this.clearForm();
@@ -70,31 +97,6 @@ export class SignupComponent implements OnInit, AfterViewInit{
     });
   }
 
-  getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => this.setLocation(this.parsePosition(position)),
-        (err) => this.handleFirefoxLocation()
-      );
-    }
-    else{
-      alert("Geolocation is not supported by this browser.");
-    }
-  }
-
-  private async handleFirefoxLocation(): Promise<any> {
-    await fetch(
-      "https://location.services.mozilla.com/v1/geolocate?key=test"
-    ).then((el) => this.setLocation(el.json()));
-  }
-
-  parsePosition(position: any) {
-    const {
-      coords: { latitude: lat, longitude: lng },
-    } = position;
-    return { location: { lat, lng } };
-  }
-
   countryChanged(country: Country) {
     this.countryCode = '+' + country.dialCode;
   }
@@ -103,8 +105,46 @@ export class SignupComponent implements OnInit, AfterViewInit{
     this.user.phone = phoneNumber;
   }
 
-  private setLocation(location: any) {
-    this.location = location.location.lat + ',' + location.location.lng;
+  getAddressLabel(){
+    return this.user.user_type === 'provider' ? 'Postal Code' : 'Address';
+  }
+
+  openPrivacyPolicy() {
+		this.modalService.open(PrivacyPolicyComponent, {fullscreen: true, scrollable: true});
+	}
+
+  openTermsAndConditions() {
+    this.modalService.open(TermsOfServiceComponent, {fullscreen: true, scrollable: true});
+  }
+
+  private initGoogleAddressAutoComplete(): void {
+    const input = document.getElementById('inputAddress') as HTMLInputElement;
+    this.addressAutocomplete = new google.maps.places.Autocomplete(input);
+    this.bindPlacesChangedEventToAddressInput();
+  }
+
+  private initGooglePostalCodeAutoComplete(): void {
+    const input = document.getElementById('inputPostalCode') as HTMLInputElement;
+    this.postalCodeAutoComplete = new google.maps.places.Autocomplete(input, {
+      types: ['(regions)']
+    });
+    this.bindPlacesChangedEventToPostalCodeInput();
+  }
+
+  private bindPlacesChangedEventToAddressInput(): void {
+    this.addressAutocomplete.addListener('place_changed', () => {
+      const place = this.addressAutocomplete.getPlace();
+      // Update your form and variables with the selected place details
+      this.user.address = place.formatted_address;
+    });
+  }
+
+  private bindPlacesChangedEventToPostalCodeInput(): void {
+    this.postalCodeAutoComplete.addListener('place_changed', () => {
+      const place = this.postalCodeAutoComplete.getPlace();
+      // Update your form and variables with the selected place details
+      this.user.address = place.formatted_address;
+    });
   }
 
   private validateUser(): boolean{
@@ -118,6 +158,5 @@ export class SignupComponent implements OnInit, AfterViewInit{
   private clearForm(){
     this.user = new User();
     this.countryCode = '';
-    this.location = '';
   }
 }

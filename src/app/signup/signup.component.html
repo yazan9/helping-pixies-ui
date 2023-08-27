@@ -40,48 +40,41 @@
                   </div>
                 </div>
 
-                
-                <!-- <div class="col-md-2">
-                  <label for="inputCountryCode" class="form-label">Country Code</label>
-                  <input type="text" class="form-control" id="inputCountryCode" name="countryCode" [(ngModel)]="countryCode" required
-                  [class.invalid]="signupForm.controls['countryCode'] && signupForm.controls['countryCode'].invalid && signupForm.controls['countryCode'].touched">
-                  
-                </div> -->
-                
-                <!-- <div class="col-md-10">
-                  <label for="inputPhoneNumber" class="form-label">Phone Number</label>
-                  <input type="text" class="form-control" id="inputPhoneNumber" name="phone" [(ngModel)]="user.phone" required
-                  [class.invalid]="signupForm.controls['phone'] && signupForm.controls['phone'].invalid && signupForm.controls['phone'].touched">
-                  
-                </div> -->
-
                 <div class="col-md-12">
                   <label for="inputRegistrationType" class="form-label">I will be</label>
-                  <select id="inputRegistrationType" class="form-select" [(ngModel)]="user.user_type" name="resgistrationType">
+                  <select id="inputRegistrationType" class="form-select" [(ngModel)]="user.user_type" name="resgistrationType"
+                  (change)="registrationTypeChanged()">
                     <option [ngValue]="'client'">Requesting Cleaning Services </option>
                     <option [ngValue]="'provider'">Providing Cleaning Services</option>
                   </select>
                 </div>
 
-                <!-- <div class="col-12" *ngIf="user.user_type === 'provider'">
-                  <label for="inputLocation" class="form-label">Location</label>
-                  <input type="text" class="form-control" id="inputLocation" name="location" [(ngModel)]="location" (focus)="getLocation()" readonly 
-                  [class.invalid]="signupForm.controls['location'] && signupForm.controls['location'].invalid && signupForm.controls['location'].touched">
-                </div> -->
-
-                <div class="col-12">
+                <div class="col-12" [class.d-none]="user.user_type === 'client'">
                   <label for="inputName" class="form-label">Postal Code</label>
-                  <input type="text" class="form-control" id="inputLocation" name="location" [(ngModel)]="user.postal_code">     
+                  <input type="text" class="form-control" name="location" [(ngModel)]="postalCode" 
+                   id="inputPostalCode">     
                   <div class="form-text">
-                    By sharing your postal code, you will be able to see services available in your area
+                    By sharing your postal code, customers around you will be able to find you more easily.
                   </div>             
                 </div>
+
+                <div class="col-12" [class.d-none]="user.user_type === 'provider'">
+                  <label for="inputAddress" class="form-label">Address</label>
+                  <input type="text" class="form-control" name="address" [(ngModel)]="address" 
+                   id="inputAddress">     
+                              
+                </div>
+
+                <ng-template #addressSearch>
+                  
+                </ng-template>
+                
                 
                 <div class="col-12">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="policyCheck">
+                    <input class="form-check-input" type="checkbox" id="policyCheck" required name="polciCheck" [(ngModel)]="policyAgreed">
                     <label class="form-check-label" for="policyCheck">
-                      I've read and I accept the <a href="#">Privacy Policy</a> and <a href="">Terms of Service</a>
+                      I've read and I accept the <a href="#" (click)="openPrivacyPolicy(); $event.preventDefault()">Privacy Policy</a> and <a href="#" (click)="openTermsAndConditions();$event.preventDefault()">Terms of Service</a>
                     </label>
                   </div>
                 </div>
