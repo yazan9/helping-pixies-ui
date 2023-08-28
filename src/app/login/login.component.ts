@@ -31,8 +31,11 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['/dashboard']);
       }
     }, err =>{
-      console.log(err);
       if(err.status == 401){
+        if(err?.error?.message){
+          this.showDanger(err.error.message);
+          return;
+        }
         this.showDanger('Invalid email or password');
     }
   else{

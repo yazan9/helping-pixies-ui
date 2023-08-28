@@ -24,13 +24,7 @@ export class AuthService {
   constructor(private http: HttpClient, private storageService: StorageService, private router: Router) { }
 
   public register(user: User) {
-    return this.http.post<TokenResponse>(`users`, {user: user})
-    .pipe(
-      tap((res: TokenResponse) => {
-        this.setTokens(res.jwt_token);
-        this.setUser(res.user);
-      }
-    ));
+    return this.http.post<TokenResponse>(`users`, {user: user});
   }
 
   public login(user: User) {
