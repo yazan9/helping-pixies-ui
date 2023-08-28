@@ -23,7 +23,6 @@ export class SignupComponent implements OnInit, AfterViewInit{
   public address: string = '';
   public postalCode: string = '';
   public policyAgreed: boolean = false;
-  public signedUp: boolean = false;
 
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
@@ -36,6 +35,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
     private toastService: ToastService,
     private userService: UserService,
     private modalService: NgbModal,
+    private router: Router
     ) {
       
   }
@@ -82,8 +82,8 @@ export class SignupComponent implements OnInit, AfterViewInit{
     this.user.address = this.user.user_type === 'provider' ? this.postalCode : this.address;
 
     this.authService.register(this.user).subscribe((response) => {
+      this.router.navigate(['/confirm-email'], { queryParams: { email: this.user.email } });
       this.clearForm();
-      this.signedUp = true;
     }, (error) => {
       if(error?.error?.errors?.length){
         error.error.errors.forEach((err: string) => {

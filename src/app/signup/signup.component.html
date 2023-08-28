@@ -4,7 +4,7 @@
             <h1>Register</h1>
             <p>Already have an account? <a href="/login">Login</a></p>
         </div>
-        <div *ngIf="!signedUp">
+        <div>
             <form class="row g-3" #signupForm="ngForm" autocomplete="off">
                 <div class="col-12">
                   <label for="inputEmail" class="form-label">Email*</label>
@@ -94,7 +94,7 @@
               </form>
         </div>
 
-        <div *ngIf="signedUp">
+        <div>
           <p>You have registered successfully for our service, Please confirm your email and login to start using helping pixies</p>
         </div>
         

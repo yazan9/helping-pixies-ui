@@ -42,6 +42,10 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  public resendConfirmationEmail(email: string) {
+    return this.http.post(`confirmation`, {email: email});
+  }
+
   public getUser(): User | null {
     let user = this.storageService.getItemFromLocalStorage('hp-user');
     if (user) {

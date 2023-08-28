@@ -18,6 +18,7 @@ import { PasswordValidator } from './directives/password-validator/password-vali
 import { PhoneInputComponent } from './phone-input/phone-input.component';
 import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-serv
     PasswordValidator,
     PhoneInputComponent,
     PrivacyPolicyComponent,
-    TermsOfServiceComponent
+    TermsOfServiceComponent,
+    ConfirmEmailComponent
   ],
   imports: [
     BrowserModule,

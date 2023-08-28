@@ -22,25 +22,35 @@ export class LoginComponent implements OnInit{
 
   }
 
-  public login(){
-    this.authService.login(this.user).subscribe((response:TokenResponse) => {
-      if(response.user.user_type == 'provider'){
+  public login() {
+    this.authService.login(this.user).subscribe((response: TokenResponse) => {
+      if (response.user.user_type == 'provider') {
         this.router.navigate(['/provider']);
       }
-      else{
+      else {
         this.router.navigate(['/dashboard']);
       }
-    }, err =>{
-      if(err.status == 401){
-        if(err?.error?.message){
-          this.showDanger(err.error.message);
+    }, err => {
+      if (err.status == 401) {
+        let errorCode = err.error.code;
+        if (errorCode === 0) {
+          this.toastService.showError("Please confirm your email address");
+          this.router.navigate(['/confirm-email'], { queryParams: { email: this.user.email } });
           return;
         }
-        this.showDanger('Invalid email or password');
-    }
-  else{
-    this.showDanger('Server Error, please try in a bit');
-  }});
+        else if (errorCode === 1) {
+          this.showDanger('Invalid email or password');
+          return;
+        }
+        else {
+          this.toastService.showError("Server error, please try again in a bit");
+          return;
+        }
+      }
+      else {
+        this.showDanger('Server Error, please try in a bit');
+      }
+    });
   }
 
   showDanger(text: string) {

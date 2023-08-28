@@ -7,6 +7,7 @@ import { BookComponent } from './book/book.component';
 import { FrequencyComponent } from './book/frequency/frequency.component';
 import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'terms-of-service',
     component: TermsOfServiceComponent
+  },
+  {
+    path: 'confirm-email',
+    component: ConfirmEmailComponent
   },
   {
     path: 'book',
