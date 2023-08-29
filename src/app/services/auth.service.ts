@@ -46,6 +46,10 @@ export class AuthService {
     return this.http.post(`confirmation`, {email: email});
   }
 
+  public resetPassword(token: string, password: string) {
+    return this.http.put(`password`, {reset_password_token: token, password: password});
+  }
+
   public getUser(): User | null {
     let user = this.storageService.getItemFromLocalStorage('hp-user');
     if (user) {

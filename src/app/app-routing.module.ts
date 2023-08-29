@@ -8,6 +8,7 @@ import { FrequencyComponent } from './book/frequency/frequency.component';
 import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'confirm-email',
     component: ConfirmEmailComponent
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   },
   {
     path: 'book',

@@ -19,6 +19,7 @@ import { PhoneInputComponent } from './phone-input/phone-input.component';
 import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
     PhoneInputComponent,
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
-    ConfirmEmailComponent
+    ConfirmEmailComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
