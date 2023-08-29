@@ -48,4 +48,8 @@ export class ConversationsService {
   selectConversation(conversation: Conversation | null): void {
     this.selectedConversationSource.next(conversation);
   }
+
+  getUnreadCount(): Observable<number>{ // 1
+    return this.http.get<number>('conversations/unread_messages_count');
+  }
 }

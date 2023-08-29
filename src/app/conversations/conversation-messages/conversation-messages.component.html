@@ -1,5 +1,5 @@
 <div class="booking-box mt-3">
-    <div *ngIf="conversation?.messages?.length" class="mb-2">
+    <div *ngIf="conversation?.messages?.length; else no_messages" class="mb-2">
         <div *ngFor="let message of conversation?.messages" >
             <app-message [message]="message"></app-message>
         </div>
@@ -9,4 +9,11 @@
             <button class="btn btn-success" (click)="sendMessage()"><i class="fa fa-send"></i></button>
         </div>
     </div>
+
+    <ng-template #no_messages>
+        <div class="text-center">
+            <h3>No messages</h3>
+        </div>
+    </ng-template>
+
 </div>
