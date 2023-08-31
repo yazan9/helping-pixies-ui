@@ -93,12 +93,29 @@ export class BookingService {
   public bookProvider(providerId: number): Observable<any>{
     let booking: Booking = new Booking();
     booking.provider_id = providerId;
-    booking.start_at = this.getSelectedDate().toISOString();
     booking.frequency = this.getFrequencyKey(this.selectedFrequency);
+    booking.start_at = this.setStartAt(booking);
     booking.rate = this._price;
+    booking.hours = this.selectedHours;
+    booking.offset = this.setBookingOffset(booking)
     booking.comments = '';
 
     return this.http.post('bookings', booking);
+  }
+
+  private setBookingOffset(booking: Booking): number {
+    let offset = 0;
+    if (booking.frequency !== "twice_a_week") {
+      return 0;
+    }
+    return this.getDaysDifference() || 0;
+  }
+
+  private setStartAt(booking: Booking): string {
+    if(booking.frequency === "twice_a_week"){
+      return this.startDate?.toISOString() || '';
+    }
+    return this.getSelectedDate().toISOString();
   }
 
   public getBookings(): Observable<any>{
@@ -134,4 +151,14 @@ export class BookingService {
       }
     ));
   }
+
+  getDaysDifference(): number | null {
+    if (this.startDate && this.endDate) {
+      const millisecondsDifference = this.endDate.getTime() - this.startDate.getTime();
+      const daysDifference = millisecondsDifference / (1000 * 60 * 60 * 24);
+      return daysDifference;
+    }
+    return null;
+  }
+    
 }

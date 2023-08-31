@@ -135,6 +135,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       case FrequencyType.once_every_two_weeks:
         return this.NUMBER_OF_WEEKS_TO_REPEAT / 2;
     }
+    return 0;
   }
   
   getRepeatOffset(frequency: FrequencyType): number {
@@ -148,6 +149,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       case FrequencyType.once_every_two_weeks:
         return 14;
     }
+    return 0;
   }
 
   updateCalendar(bookingId: number, status: string): void {

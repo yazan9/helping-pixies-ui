@@ -12,6 +12,8 @@ export class Booking{
     provider: Provider;
     client: Client;
     address: string;
+    hours: number;
+    offset: number;
 
     constructor(){
         this.id = 0;
@@ -24,5 +26,7 @@ export class Booking{
         this.provider = new Provider();
         this.client = new Client();
         this.address = '';
+        this.hours = 0;
+        this.offset = 0;
     }
 }

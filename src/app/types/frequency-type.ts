@@ -1,6 +1,6 @@
-export enum FrequencyType {
-    once = "Once",
-    once_a_week = "Weekly",
-    twice_a_week = "Twice a week",
-    once_every_two_weeks = "Once every two weeks"
+export class FrequencyType {
+    static once = "once";
+    static once_a_week = "once_a_week";
+    static twice_a_week = "twice_a_week";
+    static once_every_two_weeks = "Once once_every_two_weeks"
   }

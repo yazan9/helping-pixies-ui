@@ -127,10 +127,6 @@ export class BookingsListComponent implements OnInit{
     }
 	}
 
-  public getFrequency(frequency: string): string {
-    return FrequencyType[frequency as keyof typeof FrequencyType];
-  }
-
   public acceptBooking(bookingId: number): void {
     this.bookingService.acceptBooking(bookingId).subscribe((response) => {
       let booking = this.bookings.find(booking => booking.id === bookingId);

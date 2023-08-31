@@ -61,8 +61,8 @@ export class ProviderDetailsModalComponent implements OnInit {
     }
     else{
       this.bookingService.bookProvider(this.provider.id).subscribe((response) => {
-        this.router.navigate(['/dashboard']);
-        this.modal.close();
+        // this.router.navigate(['/dashboard']);
+        // this.modal.close();
       }, (error) => {
         alert('Error booking provider');
       });
