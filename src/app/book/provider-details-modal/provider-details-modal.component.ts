@@ -32,7 +32,7 @@ export class ProviderDetailsModalComponent implements OnInit {
     public reviewsService: ReviewsService, 
     private authService: AuthService,
     private router: Router,
-    private bookingService: BookingService
+    public bookingService: BookingService
     ) { }
 
   ngOnInit(): void {

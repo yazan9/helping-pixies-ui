@@ -27,6 +27,7 @@ export class BookingService {
   private _longitude: number = 0;
   public radius: number = 5;
   public query: string = '';
+  public comments: string = '';
 
   //Observable sources
   private bookingAcceptedSubject = new Subject<number>();
@@ -98,7 +99,7 @@ export class BookingService {
     booking.rate = this._price;
     booking.hours = this.selectedHours;
     booking.offset = this.setBookingOffset(booking)
-    booking.comments = '';
+    booking.comments = this.comments;
 
     return this.http.post('bookings', booking);
   }

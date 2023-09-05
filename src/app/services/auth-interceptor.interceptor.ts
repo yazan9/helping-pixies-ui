@@ -23,6 +23,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
 
   setRequerstUrl(req: HttpRequest<any>) {
     const apiUrl = environment.API_URL;
+    console.log(apiUrl);
     let url: string = apiUrl + req.url;
     
     const request = req.clone({
