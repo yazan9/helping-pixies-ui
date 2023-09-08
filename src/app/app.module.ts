@@ -20,6 +20,8 @@ import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.c
 import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { BubblesComponent } from './bubbles/bubbles.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
     ConfirmEmailComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    BubblesComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     HttpClientModule,
     NgbToastModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthInterceptorInterceptor,

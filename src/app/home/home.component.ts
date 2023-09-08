@@ -8,16 +8,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private authService: AuthService, public router: Router){}
 
   ngOnInit(): void {
-    if(this.authService.isLoggedIn){
-      if(this.authService.getUserType() === 'provider'){
+    let isLoggedIn = this.authService.isLoggedIn.subscribe(loggedIn => {
+      let user = this.authService.getUser();
+      if(user?.user_type === 'provider'){
         this.router.navigate(['/provider']);
       }
-      else{
+      else if(user?.user_type === 'client'){
         this.router.navigate(['/dashboard']);
       }
-    }
+    });
+    
   }
 }

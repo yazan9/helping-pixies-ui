@@ -1,0 +1,8 @@
+<div *ngFor="let bubble of bubbles"
+  [@floatBubble]="{value: bubble.state, params: {duration: bubble.duration}}"
+  (animationend)="onAnimationEnd(bubble)"
+  [style.left]="bubble.left"
+  [style.width]="bubble.size"
+  [style.height]="bubble.size"
+  class="bubble">
+</div>

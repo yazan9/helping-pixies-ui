@@ -1,0 +1,24 @@
+.btn-link,
+.btn-link:visited {
+  color: #6b6b6b;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  color: #5a5a5a;  /* slightly darker shade for hover */
+  text-decoration: underline;
+}
+
+.btn-link:active {
+  color: #4a4a4a;  /* even darker shade for active state */
+}
+
+.btn-link:focus {
+  outline: none;  /* remove browser default focus outline */
+  box-shadow: 0 0 0 0.2rem rgba(107, 107, 107, 0.25);  /* custom focus indicator */
+}
+
+.navbar{
+    max-height: 50px;
+    border-bottom: 1px solid #ccc;
+}

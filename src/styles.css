@@ -1,51 +1,62 @@
 @import './assets/stylesheets/calendar.css';
 @import '~font-awesome/css/font-awesome.css';
 @import '~intl-tel-input/build/css/intlTelInput.css';
+@import './assets/stylesheets/bootstrap_customized.css';
 
 /* You can add global styles to this file, and also import other style files */
 body {
-    /* background-image: url('../src/assets/images/bubbles.jpg'); /* Replace with the path to your image */
-    /* background-repeat: repeat;  /*Repeat the image vertically and horizontally */
-    /* background-size: cover;  /* Set the size of the repeated images */
-    /* Optional: Add other styles to customize the appearance */
-    /* background-color: #F4E98C; yellow*/
-    background-color: #76D7C4;
-    font-size: small;
-    /*background-color: #3498DB;;*/
-  }
+  /* background-image: url('../src/assets/images/bubbles.jpg'); /* Replace with the path to your image */
+  /* background-repeat: repeat;  /*Repeat the image vertically and horizontally */
+  /* background-size: cover;  /* Set the size of the repeated images */
+  /* Optional: Add other styles to customize the appearance */
+  /* background-color: #F4E98C; yellow*/
+  /* background-color: #76D7C4;
+    font-size: small; */
+  /*background-color: #3498DB;;*/
 
-.container-fluid{
-    padding: 0;
+  font-size: 18px;
+  word-spacing: 1px;
+  line-height: 26px;
+  font-family: freightsans_regular, helvetica neue, helvetica, arial, sans-serif;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #6b6b6b;
+  height: calc(100vh - 50px);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
-.invalid{
-    border-color: red;
+.container-fluid {
+  padding: 0;
 }
 
-.dropdown-item{
-    cursor: pointer;
+.invalid {
+  border-color: red;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }
 
 .avatar-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ccc; /* You can choose a color that fits your design */
-  }
-
-  .iti__flag {background-image: url("intl-tel-input/build/img/flags.png");}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .iti__flag {background-image: url("intl-tel-input/build/img/flags@2x.png");}
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  /* You can choose a color that fits your design */
 }
-  
-  
-  
-  
-  
-  
 
+.iti__flag {
+  background-image: url("intl-tel-input/build/img/flags.png");
+}
 
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .iti__flag {
+    background-image: url("intl-tel-input/build/img/flags@2x.png");
+  }
+}

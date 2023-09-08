@@ -1,42 +1,51 @@
 
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th scope="col" sortable="frequency" (sort)="onSort($event)">Frequency</th>
-			<th scope="col" sortable="start_at" (sort)="onSort($event)">Start Date</th>
-			<th scope="col" sortable="start_at" (sort)="onSort($event)">Start Time</th>
-            <th scope="col">{{user_type === 'provider' ? 'Client' : 'Provider'}}</th>
-            <th scope="col" sortable="rate" (sort)="onSort($event)">Hourly Rate</th>
-            <th scope="col">Status</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let booking of bookings">
-			<td>
-				{{booking.frequency }}
-			</td>
-			<td>{{ booking.start_at | date:'dd MMM y'}}</td>
-			<td>{{ booking.start_at | date:'h:mm a'}}</td>
-            <td>{{ booking.client ? booking.client.name : booking.provider.name }}</td>
-            <td>{{ booking.rate }}</td>
-            <td>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn dropdown-toggle"
-					[class.btn-success]="booking.status == 'active'"
-					[class.btn-warning]="booking.status == 'pending'"
-					[class.btn-danger]="booking.status == 'cancelled'"
-					data-bs-toggle="dropdown" aria-expanded="false">
-                      {{ utils.capitalize(booking.status) }}
-                    </button>
-                    <ul class="dropdown-menu">
-						<li *ngIf="user_type === 'provider' && booking.status!=='active'"><a class="dropdown-item cursor-pointer" (click)="acceptBooking(booking.id)">Accept</a></li>
-						<li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">Cancel</a></li>
-                    </ul>
-                  </div>
-            </td>
-		</tr>
-	</tbody>
-</table>
+<div *ngIf="bookings?.length; else noBookings">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col" sortable="frequency" (sort)="onSort($event)">Frequency</th>
+				<th scope="col" sortable="start_at" (sort)="onSort($event)">Start Date</th>
+				<th scope="col" sortable="start_at" (sort)="onSort($event)">Start Time</th>
+				<th scope="col">{{user_type === 'provider' ? 'Client' : 'Provider'}}</th>
+				<th scope="col" sortable="rate" (sort)="onSort($event)">Hourly Rate</th>
+				<th scope="col">Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let booking of bookings">
+				<td>
+					{{booking.frequency }}
+				</td>
+				<td>{{ booking.start_at | date:'dd MMM y'}}</td>
+				<td>{{ booking.start_at | date:'h:mm a'}}</td>
+				<td>{{ booking.client ? booking.client.name : booking.provider.name }}</td>
+				<td>{{ booking.rate }}</td>
+				<td>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn dropdown-toggle"
+						[class.btn-success]="booking.status == 'active'"
+						[class.btn-warning]="booking.status == 'pending'"
+						[class.btn-danger]="booking.status == 'cancelled'"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						  {{ utils.capitalize(booking.status) }}
+						</button>
+						<ul class="dropdown-menu">
+							<li *ngIf="user_type === 'provider' && booking.status!=='active'"><a class="dropdown-item cursor-pointer" (click)="acceptBooking(booking.id)">Accept</a></li>
+							<li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">Cancel</a></li>
+						</ul>
+					  </div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<ng-template #noBookings>
+	<div class="">
+		You have no bookings yet. Start by clicking the button above to explore providers around you.
+	</div>
+</ng-template>
+
 
 <ng-template #cancelConfirmation let-modal>
 	<div class="modal-header">
