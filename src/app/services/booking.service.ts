@@ -69,12 +69,10 @@ export class BookingService {
     return this._price;
   }
 
-  public updateLocation(latitude: number, longitude: number){
+  public updateLocation(latitude: number, longitude: number, postalCode: string | null){
     this._latitude = latitude;
     this._longitude = longitude;
-
-    //do something with the location
-    //this.zipCode = value;
+    this.zipCode = postalCode ?? '';
   }
 
   public searchProviders(page: number): Observable<any>{

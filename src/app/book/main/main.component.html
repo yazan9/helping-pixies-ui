@@ -1,11 +1,12 @@
-<div class="booking-layout">
-    <div class="booking-box me-3 w-50">
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        
         <div class="mb-4">
             <h2>When would you like to start?</h2>
         </div>
         <div class="mb-5">
             <form class="row g-3" #bookingForm="ngForm">
-                <div class="col-12">
+                <div class="">
                     <label for="inputHours" class="form-label">Number of hours</label>
                     <select id="inputHours" class="form-select" required [(ngModel)]="bookingService.selectedHours" name="hours">
                         <option value="" disabled selected>Choose...</option>
@@ -13,7 +14,7 @@
                     </select>
                 </div> 
                 
-                <div class="col-12">
+                <div class="">
                     <div class="mb-4">
                         <h2>Which day would you like to start?</h2>
                     </div>
@@ -42,7 +43,7 @@
                     
                 </div>
 
-                <div class="col-12">
+                <div class="">
                     <div class="mb-4">
                         <h2>What time day would you like to start?</h2>
                     </div>
@@ -52,15 +53,16 @@
                     
                 </div>
     
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-dark me-2" (click)="location.back()">Previous</button>
-                    <button type="button" class="btn btn-dark" [disabled]="!bookingService.selectedFrequency" (click)="next()">Next</button>
-                </div>
+                
 
               </form>
         </div>
     </div>
-    <div class="booking-sidebar-container">
+    <div class="booking-sidebar-container col-sm-12 col-md-6">
         <app-booking-sidebar></app-booking-sidebar>
+        <div class="">
+            <button type="button" class="btn btn-dark me-2" (click)="location.back()">Previous</button>
+            <button type="button" class="btn btn-dark" [disabled]="!bookingService.selectedFrequency" (click)="next()">Next</button>
+        </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/services/booking.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { FrequencyType } from 'src/app/types/frequency-type';
 
 @Component({
@@ -12,7 +13,7 @@ export class BookingSummaryComponent {
   public advnancedView: boolean = false;
   days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  constructor(public bookingService: BookingService) { 
+  constructor(public bookingService: BookingService, public utils: UtilsService) { 
     this.advnancedView = this.bookingService.selectedFrequency !== FrequencyType.once;
   }
 
