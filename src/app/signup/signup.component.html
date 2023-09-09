@@ -1,11 +1,19 @@
 <div class="auth-layout">
+  <!-- Loader -->
+  <div *ngIf="isDetecingLocation" class="overlay">
+    <div class="loading-dots">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
     <div class="auth-box">
         <div>
             <h1>Register</h1>
             <p>Already have an account? <a href="/login">Login</a></p>
         </div>
         <div>
-            <form class="row g-3" #signupForm="ngForm" autocomplete="off">
+            <form class="row g-3" #signupForm="ngForm" autocomplete="off" [ngClass]="{'disabled-form': isDetecingLocation}" [attr.disabled]="isDetecingLocation ? true : null">
                 <div class="col-12">
                   <label for="inputEmail" class="form-label">Email*</label>
                   <input type="email" class="form-control" id="inputEmail" name="email" [(ngModel)]="user.email" required #emailInput
@@ -42,8 +50,7 @@
 
                 <div class="col-md-12">
                   <label for="inputRegistrationType" class="form-label">I will be</label>
-                  <select id="inputRegistrationType" class="form-select" [(ngModel)]="user.user_type" name="resgistrationType"
-                  (change)="registrationTypeChanged()">
+                  <select id="inputRegistrationType" class="form-select" [(ngModel)]="user.user_type" name="resgistrationType">
                     <option [ngValue]="'client'">Requesting Cleaning Services </option>
                     <option [ngValue]="'provider'">Providing Cleaning Services</option>
                   </select>
@@ -63,11 +70,7 @@
                   <input type="text" class="form-control" name="address" [(ngModel)]="address" 
                    id="inputAddress">     
                               
-                </div>
-
-                <ng-template #addressSearch>
-                  
-                </ng-template>
+                </div>               
                 
                 
                 <div class="col-12">
@@ -94,9 +97,45 @@
               </form>
         </div>
 
-        <div>
-          <p>You have registered successfully for our service, Please confirm your email and login to start using helping pixies</p>
-        </div>
         
     </div>
 </div>
+
+<ng-template #noLocationConfirmation let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">Confirm Location</h4>
+	  <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+	<div class="modal-body">
+	  <p>Hmm .. it looks like Google has not yet updated its database with your postal code. We can register it as it is, or you can try to go back and update it. If you'd like, we can also help by trying to geolocate you. What would you like to do?</p>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="locationOptions" id="register" [(ngModel)]="selectedLocationOption" value="register">
+      <label class="form-check-label" for="flexRadioDefault1">
+        Register my address as it is
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="locationOptions" id="update" checked [(ngModel)]="selectedLocationOption" value="update">
+      <label class="form-check-label" for="flexRadioDefault2">
+        Go back and update it
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="locationOptions" id="detect" [(ngModel)]="selectedLocationOption" value="detect">
+      <label class="form-check-label" for="flexRadioDefault2">
+        Try and geolocate me
+      </label>
+    </div>
+
+    <div class="ok-button pt-2">
+      <button class="btn btn-secondary" (click)="modal.close()">Ok</button>
+    </div>
+     
+	</div>
+
+  <div class="modal-footer">
+	  <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">Ok</button>
+	</div>
+  </ng-template>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { User } from '../types/user';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { UserService } from '../services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from '../static/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from '../static/terms-of-service/terms-of-service.component';
+import { LocationService } from '../services/location.service';
 declare var google: any;
 
 @Component({
@@ -19,14 +20,22 @@ declare var google: any;
 export class SignupComponent implements OnInit, AfterViewInit{
   public user: User = new User();
   public countryCode: string = '';
+  public selectedLocationOption: string = 'update';
+  isDetecingLocation: boolean = false;
 
+  //for clients
   public address: string = '';
+
+  //for providers
   public postalCode: string = '';
+
   public policyAgreed: boolean = false;
 
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
+  @ViewChild('noLocationConfirmation') noLocationConfirmation!: TemplateRef<any>;
 
+  //google autocomplete
   private addressAutocomplete: any;
   private postalCodeAutoComplete: any;
 
@@ -35,7 +44,8 @@ export class SignupComponent implements OnInit, AfterViewInit{
     private toastService: ToastService,
     private userService: UserService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private locationService: LocationService
     ) {
       
   }
@@ -51,12 +61,12 @@ export class SignupComponent implements OnInit, AfterViewInit{
     this.initGooglePostalCodeAutoComplete();
   }
 
-  registrationTypeChanged(){
-    
-  }
-
   signupClicked(signupForm: NgForm): void {
     if(signupForm.valid && this.user.phone.trim() !== ''){
+      if(this.user.user_type === 'provider' && this.user.address.trim() === ''){
+        this.openLocationConfirmationDialog();
+        return;
+      }
       this.doSignUp();
     }
     else{
@@ -74,7 +84,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
 
   public doSignUp() {
     if(!this.validateUser()){
-      alert('Please fill all the fields');
+      this.toastService.showError('Please fill all the fields');
       return;
     }
 
@@ -91,11 +101,44 @@ export class SignupComponent implements OnInit, AfterViewInit{
         });
         return;
       }
+      else if(error?.error?.message){
+        this.toastService.showError(error.error.message);
+      }
       else{
         this.toastService.showError('Server Error, please try in a bit');
       }
     });
   }
+
+  // #region Location Confirmation Modal
+
+  openLocationConfirmationDialog(): void {
+    const modalRef = this.modalService.open(this.noLocationConfirmation, {fullscreen: true, scrollable: true});
+    modalRef.result.then((result) => {
+      if(this.selectedLocationOption === "register"){
+        this.doSignUp();
+      }
+      else if(this.selectedLocationOption === "detect"){
+        this.detectLocation();
+      }
+    });
+  }
+
+  detectLocation(): void {
+    this.isDetecingLocation = true;
+    this.locationService.getLocation().subscribe((response) => {
+      this.isDetecingLocation = false;
+      this.user.latitude = response.coords.latitude.toString();
+      this.user.longitude = response.coords.longitude.toString();
+
+      this.doSignUp();
+    }, err => {
+      this.isDetecingLocation = false;
+      this.toastService.showError('Ouch, that did not work :( Perhaps try again and allow location access?');
+    });
+  }
+
+  // #endregion
 
   countryChanged(country: Country) {
     this.countryCode = '+' + country.dialCode;
