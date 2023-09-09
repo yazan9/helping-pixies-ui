@@ -18,11 +18,12 @@
     <div class="mb-5">
         <app-booking-summary></app-booking-summary>
         <div class="d-flex flex-column">
-            <div class="mb-3 w-100">
+            <div class="mb-3 mt-3 w-100">
+                <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write a note about your booking" [(ngModel)]="bookingService.comments"></textarea>
               </div>
               <div class="mb-3">
-                <button type="button" class="btn btn-primary" (click)="book()">Book</button>
+                <button type="button" class="btn btn-secondary" (click)="book()">Book</button>
               </div>
         </div>
     </div>

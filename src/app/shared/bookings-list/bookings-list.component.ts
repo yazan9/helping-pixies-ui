@@ -1,6 +1,7 @@
 import { Component, Directive, EventEmitter, Input, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { BookingDetailsComponent } from 'src/app/dashboard/booking-details/booking-details.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookingService } from 'src/app/services/booking.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -91,6 +92,20 @@ export class BookingsListComponent implements OnInit{
       alert('Error fetching bookings');
     });
   }
+
+  viewBooking(booking: Booking){
+    const modalRef = this.modalService.open(BookingDetailsComponent, {fullscreen: true, scrollable: true});
+    modalRef.componentInstance.booking = booking;
+
+    modalRef.result.then((result) => {
+      if (result === 'accept') {
+        this.acceptBooking(booking.id);
+      }
+      else if (['cancel', 'reject'].includes(result)) {
+        this.cancelBooking(booking.id);
+      }
+    }
+  )}
 
   cancelBooking(bookingId: number): void {
     const modalRef = this.modalService.open(this.cancelConfirmation);

@@ -14,6 +14,7 @@ export class Booking{
     address: string;
     hours: number;
     offset: number;
+    user_id: number;
 
     constructor(){
         this.id = 0;
@@ -28,5 +29,6 @@ export class Booking{
         this.address = '';
         this.hours = 0;
         this.offset = 0;
+        this.user_id = 0;
     }
 }

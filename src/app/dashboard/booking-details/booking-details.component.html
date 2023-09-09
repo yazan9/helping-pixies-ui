@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title">Booking Details</h4>
+    <button type="button" class="close btn" (click)="activeModal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Your booking details go here -->
+    <p>{{booking.client.name}}</p>
+    Start: <p>{{ booking.start_at | date:'dd MMM yyyy @h:mm a' }}</p>
+    Frequency: <p>{{utils.getFrequencyTypeAsString(booking.frequency)}}</p>
+    Status: <p>{{utils.capitalize(booking.status)}}</p>
+    Rate: <p>${{booking.rate}}/hr</p>
+    Comments: <p>{{booking.comments}}</p>
+    <!-- More details... -->
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="booking.status === 'pending' && isThisMyBooking()" type="button" class="btn btn-danger" (click)="cancelBooking()">Cancel Booking</button>
+    <button *ngIf="booking.status === 'pending' && !isThisMyBooking()" type="button" class="btn btn-success" (click)="acceptBooking()">Accept Booking</button>
+    <button *ngIf="booking.status === 'pending' && !isThisMyBooking()" type="button" class="btn btn-danger" (click)="rejectBooking()">Reject Booking</button>
+
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+  </div>

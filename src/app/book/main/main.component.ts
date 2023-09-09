@@ -12,6 +12,7 @@ import { FrequencyType } from 'src/app/types/frequency-type';
 })
 export class MainComponent implements OnInit {
   showRangeDatePicker: boolean = false;
+  locationReceived: boolean = false;
 
   hoveredDate: NgbDate | null = null;
 
@@ -34,6 +35,9 @@ export class MainComponent implements OnInit {
       this.router.navigate(['/book'])
     }
 	this.setShowRangeDatePicker();
+	this.bookingService.bookingLocationUpdated$.subscribe((location: {lat: number, lng: number, postalCode: string}) => {
+		this.locationReceived = true;
+	});
   }
 
   setShowRangeDatePicker(){

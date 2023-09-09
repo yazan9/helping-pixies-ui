@@ -1,6 +1,15 @@
 <h3>Location</h3>
 <hr>
-<p>We have identified your location as:</p>
+<div *ngIf="locationLoaded;else locationNotLoaded">
+    <p>We have identified your location as:</p></div>
+<ng-template #locationNotLoaded>
+    <div class="loading-dots">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+</ng-template>
+
 <div class="range-selector-container">
     <div class="d-flex">
         <input type="zip" class="form-control me-2" id="zipInput" name="zip"

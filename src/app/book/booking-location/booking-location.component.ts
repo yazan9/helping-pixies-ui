@@ -10,6 +10,7 @@ declare var google: any;  // Declare google to let TypeScript know that google w
   styleUrls: ['./booking-location.component.css']
 })
 export class BookingLocationComponent implements OnInit{
+  public locationLoaded: boolean = false;
   constructor(
     public bookingService: BookingService, 
     private locationService: LocationService,
@@ -18,6 +19,7 @@ export class BookingLocationComponent implements OnInit{
   
   ngOnInit(): void {
     this.locationService.getLocation().subscribe((position) => {
+      this.locationLoaded = true;
       this.setLocation(position.coords.latitude, position.coords.longitude);
     });
   }
@@ -40,6 +42,7 @@ export class BookingLocationComponent implements OnInit{
   }
 
   updatePostalCode(): void {
+    this.locationLoaded = false;
     const geocoder = new google.maps.Geocoder;
 
     geocoder.geocode({ 'address': this.bookingService.zipCode }, (results: {
@@ -49,6 +52,7 @@ export class BookingLocationComponent implements OnInit{
         };
       };
     }[], status: string) => {
+      this.locationLoaded = true;
       if (status === 'OK') {
         const latitude = results[0].geometry.location.lat();
         const longitude = results[0].geometry.location.lng();

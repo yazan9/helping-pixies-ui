@@ -62,7 +62,8 @@
         <app-booking-sidebar></app-booking-sidebar>
         <div class="">
             <button type="button" class="btn btn-dark me-2" (click)="location.back()">Previous</button>
-            <button type="button" class="btn btn-dark" [disabled]="!bookingService.selectedFrequency" (click)="next()">Next</button>
+            <button type="button" class="btn btn-dark" [disabled]="!bookingService.selectedFrequency" 
+            (click)="next()" *ngIf="locationReceived">Next</button>
         </div>
     </div>
 </div>

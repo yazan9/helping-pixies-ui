@@ -12,24 +12,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let booking of bookings">
+			<tr *ngFor="let booking of bookings" (click)="viewBooking(booking)" class="pointer">
 				<td>
-					{{booking.frequency }}
+					{{ utils.getFrequencyTypeAsString(booking.frequency) }}
 				</td>
 				<td>{{ booking.start_at | date:'dd MMM y'}}</td>
 				<td>{{ booking.start_at | date:'h:mm a'}}</td>
 				<td>{{ booking.client ? booking.client.name : booking.provider.name }}</td>
 				<td>{{ booking.rate }}</td>
-				<td>
+				<td (click)="$event.stopPropagation()">
 					<div class="btn-group" role="group">
-						<button type="button" class="btn dropdown-toggle"
+						<button type="button" class="btn dropdown-toggle btn-sm btn-booking-action"
 						[class.btn-success]="booking.status == 'active'"
 						[class.btn-warning]="booking.status == 'pending'"
 						[class.btn-danger]="booking.status == 'cancelled'"
 						data-bs-toggle="dropdown" aria-expanded="false">
 						  {{ utils.capitalize(booking.status) }}
 						</button>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu btn-booking-action">
 							<li *ngIf="user_type === 'provider' && booking.status!=='active'"><a class="dropdown-item cursor-pointer" (click)="acceptBooking(booking.id)">Accept</a></li>
 							<li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">Cancel</a></li>
 						</ul>
@@ -50,7 +50,7 @@
 <ng-template #cancelConfirmation let-modal>
 	<div class="modal-header">
 	  <h4 class="modal-title">Cancel Booking</h4>
-	  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+	  <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
 		<span aria-hidden="true">&times;</span>
 	  </button>
 	</div>

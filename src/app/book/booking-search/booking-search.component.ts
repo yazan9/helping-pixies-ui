@@ -5,6 +5,7 @@ import { Meta } from 'src/app/types/meta';
 import { Provider } from 'src/app/types/provider';
 import { ProviderDetailsModalComponent } from '../provider-details-modal/provider-details-modal.component';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-booking-search',
@@ -16,12 +17,14 @@ export class BookingSearchComponent implements OnInit{
   public radius: number = 0;
   public meta: Meta | null = null;
   public query: string = '';
+  public loading: boolean = false;
 
   constructor(
     public bookingService: BookingService, 
     private config: NgbRatingConfig, 
     private modalService: NgbModal,
-    private router: Router) { }
+    private router: Router,
+    public location: Location) { }
 
   ngOnInit(): void {
     if(!this.bookingService.selectedFrequency){
@@ -32,6 +35,7 @@ export class BookingSearchComponent implements OnInit{
     this.fetchData(1);
 
     this.config.max = 5;
+    this.config.readonly = true;
   }
 
   getPagesArray(num: number | null): number[] {
@@ -58,7 +62,9 @@ export class BookingSearchComponent implements OnInit{
   }
 
   fetchData(page: number): void {
+    this.loading = true;
     this.bookingService.searchProviders(page).subscribe((response: {users: Provider[], meta: Meta}) => {
+      this.loading = false;
       this.providers = response.users;
       this.meta = response.meta;
       this.providers.forEach((provider) => {
@@ -67,6 +73,7 @@ export class BookingSearchComponent implements OnInit{
       });
     }, (error) => {
       alert('Error fetching providers');
+      this.loading = false;
     });
   }
 

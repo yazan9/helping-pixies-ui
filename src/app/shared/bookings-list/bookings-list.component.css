@@ -1,3 +1,11 @@
 .cursor-pointer{
     cursor: pointer;
 }
+
+.table{
+    font-size: small;
+}
+
+.btn-booking-action{
+    font-size: small;
+}

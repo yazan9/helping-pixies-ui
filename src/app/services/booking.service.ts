@@ -20,7 +20,7 @@ export class BookingService {
   startDate: Date | null = null;
   endDate: Date | null = null;
 
-  zipCode: string = 'V9C0R3';
+  zipCode: string = '';
 
   private _price: number = 35;
   private _latitude: number = 0;
@@ -32,10 +32,12 @@ export class BookingService {
   //Observable sources
   private bookingAcceptedSubject = new Subject<number>();
   private bookingRejectedSubject = new Subject<number>();
+  private bookingLocationUpdatedSubject = new Subject<{lat: number, lng: number, postalCode: string}>();
 
   //Observable streams
   bookingAccepted$ = this.bookingAcceptedSubject.asObservable();
   bookingRejected$ = this.bookingRejectedSubject.asObservable();
+  bookingLocationUpdated$ = this.bookingLocationUpdatedSubject.asObservable();
 
   constructor(private calendar: NgbCalendar, private http: HttpClient) { 
     this.dateStruct = this.calendar.getToday();
@@ -73,14 +75,12 @@ export class BookingService {
     this._latitude = latitude;
     this._longitude = longitude;
     this.zipCode = postalCode ?? '';
+
+    this.broadcastBookingLocationUpdated(latitude, longitude, this.zipCode);
   }
 
   public searchProviders(page: number): Observable<any>{
     //call the api to get the providers
-    //TODO: remove
-    this._latitude = 48.4284;
-    this._longitude = -123.3656;
-
     return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}&query=${this.query}`);
   }
 
@@ -120,6 +120,10 @@ export class BookingService {
   public getBookings(): Observable<any>{
     return this.http.get('bookings');
   }
+  
+  public getBooking(bookingId: number): Observable<Booking>{
+    return this.http.get<Booking>(`bookings/${bookingId}`);
+  }
 
   public cancelBooking(bookingId: number): Observable<any>{
     return this.http.delete(`bookings/${bookingId}`);
@@ -131,6 +135,10 @@ export class BookingService {
 
   public broadcastBookingRejected(bookingId: number): void{
     this.bookingRejectedSubject.next(bookingId);
+  }
+
+  public broadcastBookingLocationUpdated(lat: number, lng: number, postalCode: string): void{
+    this.bookingLocationUpdatedSubject.next({lat, lng, postalCode});
   }
 
   public acceptBooking(bookingId: number): Observable<any>{
