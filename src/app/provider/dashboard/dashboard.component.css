@@ -1,1 +1,6 @@
 @import '../../../assets/stylesheets/provider.css';
+.accordion-body{
+    @media screen and (max-width: 768px) {
+        padding:0;
+    }        
+}

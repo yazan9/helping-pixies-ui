@@ -99,7 +99,34 @@ export class BookingService {
     booking.offset = this.setBookingOffset(booking)
     booking.comments = this.comments;
 
-    return this.http.post('bookings', booking);
+    return this.http.post('bookings', booking).pipe(
+      tap(() => {
+        this.resetBooking();
+      })
+    );
+  }
+
+  private resetBooking(): void {
+    this.selectedFrequency = null;
+    this.selectedHours = 2;
+    this.dateStruct = this.calendar.getToday();
+    this.selectedDate = {
+      year: this.dateStruct.year,
+      month: this.dateStruct.month
+    };
+    this.selectedTime = {
+      hour: 0,
+      minute: 0
+    };
+    this.startDate = null;
+    this.endDate = null;
+    this.zipCode = '';
+    this._price = 35;
+    this._latitude = 0;
+    this._longitude = 0;
+    this.radius = 5;
+    this.query = '';
+    this.comments = '';
   }
 
   private setBookingOffset(booking: Booking): number {
@@ -123,10 +150,6 @@ export class BookingService {
   
   public getBooking(bookingId: number): Observable<Booking>{
     return this.http.get<Booking>(`bookings/${bookingId}`);
-  }
-
-  public cancelBooking(bookingId: number): Observable<any>{
-    return this.http.delete(`bookings/${bookingId}`);
   }
 
   public broadcastBookingAccepted(bookingId: number): void{

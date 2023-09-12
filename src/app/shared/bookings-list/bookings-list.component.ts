@@ -45,6 +45,7 @@ export class NgbdSortableHeader {
   styleUrls: ['./bookings-list.component.css']
 })
 export class BookingsListComponent implements OnInit{
+  @Input() userType: string = '';
   bookings: Booking[] = [];
   originalBookings: Booking[] = [];
   FrequencyType = FrequencyType;
@@ -112,7 +113,7 @@ export class BookingsListComponent implements OnInit{
     modalRef.result.then((result) => {
       console.log(result);
       if (result === 'Yes') {
-        this.bookingService.cancelBooking(bookingId).subscribe((response) => {
+        this.bookingService.rejectBooking(bookingId).subscribe((response) => {
           this.fetchBookings();
         }, (error) => {
           alert('Error cancelling booking');

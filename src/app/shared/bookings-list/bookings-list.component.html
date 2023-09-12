@@ -18,7 +18,7 @@
 				</td>
 				<td>{{ booking.start_at | date:'dd MMM y'}}</td>
 				<td>{{ booking.start_at | date:'h:mm a'}}</td>
-				<td>{{ booking.client ? booking.client.name : booking.provider.name }}</td>
+				<td>{{ userType === 'client' ? booking.provider.name : booking.client.name }}</td>
 				<td>{{ booking.rate }}</td>
 				<td (click)="$event.stopPropagation()">
 					<div class="btn-group" role="group">
@@ -31,7 +31,7 @@
 						</button>
 						<ul class="dropdown-menu btn-booking-action">
 							<li *ngIf="user_type === 'provider' && booking.status!=='active'"><a class="dropdown-item cursor-pointer" (click)="acceptBooking(booking.id)">Accept</a></li>
-							<li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">Cancel</a></li>
+							<li><a class="dropdown-item cursor-pointer" (click)="cancelBooking(booking.id)">{{userType === "client" ? 'Cancel' : 'Reject'}}</a></li>
 						</ul>
 					  </div>
 				</td>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
 
@@ -12,7 +13,11 @@ export class ProfileComponent {
   user: User | null = new User();
   profilePicture: string = '';
 
-  constructor(private authService: AuthService, private userService: UserService) {
+  constructor(
+    private authService: AuthService, 
+    private userService: UserService,
+    private toastService: ToastService
+    ) {
     this.user = this.authService.getUser();
     this.profilePicture = this.user?.profile_image_url as string;
   }
@@ -20,7 +25,7 @@ export class ProfileComponent {
   updateProfile(): void {
     this.userService.updateProfile(this.user as User).subscribe((response) => {
       this.authService.setUser(response);
-      alert('Profile updated successfully');
+      this.toastService.showSuccess('Profile updated successfully');
     }
     );
   }
@@ -40,7 +45,7 @@ export class ProfileComponent {
   updateProfilePicture(): void {
     this.userService.updateProfileImage(this.user?.id as number, this.profilePicture).subscribe((response) => {
       this.authService.setUser(response);
-      alert('Profile picture updated successfully');
+      this.toastService.showSuccess('Profile picture updated successfully');
     });
     // Logic to update the profile picture goes here
   }

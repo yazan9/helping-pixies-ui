@@ -9,6 +9,7 @@ import { FrequencyType } from 'src/app/types/frequency-type';
 import { Subscription } from 'rxjs';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventImpl } from '@fullcalendar/core/internal';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +28,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   
   private subscriptions: Subscription[] = [];
 
-  constructor(private bookingService: BookingService, private modalService: NgbModal) { }
+  constructor(
+    private bookingService: BookingService, 
+    private modalService: NgbModal,
+    private toastService: ToastService
+    ) { }
 
   ngOnInit(): void {
     this.fetchBookings();
@@ -37,6 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if(updatedBooking){
         updatedBooking.status = 'active';
         this.updateCalendar(bookingId, 'active');
+        this.toastService.showSuccess('Booking accepted');
       }
     });
     const bookingRejectedSubscription = this.bookingService.bookingRejected$.subscribe(bookingId => {
@@ -44,6 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if(updatedBooking){
         updatedBooking.status = 'cancelled';
         this.updateCalendar(bookingId, 'cancelled');
+        this.toastService.showSuccess('Booking cancelled');
       }
     });
 
@@ -59,16 +66,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     modalRef.result.then((result) => {
       if(result === 'accept'){
         this.bookingService.acceptBooking(booking.id).subscribe((response) => {
-          alert('Booking accepted');
         }, (error) => {
-          alert('Error accepting booking');
+          this.toastService.showError('Error accepting booking');
         });
       }
       else if(result === 'reject'){
         this.bookingService.rejectBooking(booking.id).subscribe((response) => {
-          alert('Booking rejected');
         }, (error) => {
-          alert('Error rejecting booking');
+          this.toastService.showError('Error rejecting booking');
         });
       }
     });
@@ -79,7 +84,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.bookings = bookings;
       this.renderCalendarWithBookings();
     }, (error) => {
-      alert('Error fetching bookings');
+      this.toastService.showError('Error rejecting booking');
     });
   }
 
@@ -88,7 +93,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       return 'bg-success';
     }
     else if(booking.status === 'pending'){
-      return 'bg-warning';
+      return 'bg-danger';
     }
     return '';
   }
@@ -168,7 +173,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         events.push({
           id: repeatedBooking.id.toString(),
           start: repeatedBooking.start_at,
-          title: repeatedBooking.client.name, // You can customize the title
+          //title: repeatedBooking.client.name, // You can customize the title
+          
           className: this.getClassForBooking(repeatedBooking),
           // additional properties as needed...
         });
