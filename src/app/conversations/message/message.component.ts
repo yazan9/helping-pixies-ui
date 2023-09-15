@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { Conversation } from 'src/app/types/conversation';
 import { Message } from 'src/app/types/message';
 import { User } from 'src/app/types/user';
 
@@ -8,9 +9,11 @@ import { User } from 'src/app/types/user';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent {
+export class MessageComponent{
   @Input() message!: Message;
+  @Input() conversation!: Conversation | null;
 
+  editing: boolean = false;
   me: User | null = null;
 
   constructor(private authService: AuthService) {
@@ -23,5 +26,15 @@ export class MessageComponent {
 
   messageIsFromMe(message: any): boolean {
     return message.user_id === this.me?.id;
+  }
+
+  editMessage(): void {
+    this.editing = true;
+  }
+
+  deleteMessage(): void {
+    if(this.conversation){
+      this.conversation.messages = this.conversation.messages.filter(message => message.id !== this.message.id);
+    }
   }
 }

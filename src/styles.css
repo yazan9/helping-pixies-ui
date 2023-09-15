@@ -48,14 +48,25 @@ body {
 }
 
 .avatar-circle {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ccc;
   /* You can choose a color that fits your design */
+}
+
+.avatar-circle-md {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  font-size: medium;
 }
 
 .iti__flag {
@@ -117,26 +128,16 @@ body {
   justify-content: center;
 }
 
-.fc-view-harness{
-  min-height: 500px !important;
-  font-size: xx-small !important;
+.profile-picture-sm img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover; /* This line ensures that the image covers the container without stretching or squishing */
 }
 
-.fc-event-start{
-  padding:1px;
-}
-
-.fc-event-time{
-  justify-content: center;
-  display: flex;
-  flex:1;
-  font-weight: bold;
-}
-
-.fc-event-title{
-  display:none;
-}
-
-.fc-daygrid-day-number{
-  font-weight: bolder;
+.profile-picture-md img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover; /* This line ensures that the image covers the container without stretching or squishing */
 }

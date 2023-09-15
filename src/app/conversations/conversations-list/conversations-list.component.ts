@@ -27,6 +27,11 @@ export class ConversationsListComponent {
     });
   }
 
+  selectConversation(conversation: Conversation): void {
+    this.conversationsService.selectConversation(conversation);
+    this.selectedConversation = conversation;
+  }
+
   ngOnDestroy(): void {
   }
 }

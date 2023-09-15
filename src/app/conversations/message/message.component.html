@@ -1,6 +1,48 @@
+
+
 <div class="message" [ngClass]="getMessageClassName(message)">
-    <div class="message__content">
-        <div class="message__text">{{message.content}}</div>
-        <div class="message__date form-text">{{message.created_at | date:'short'}}</div>
+    <div class="message__content d-flex position-relative">
+
+        <!-- Dropdown menu at the top-right corner -->
+        <div class="message-menu position-absolute top-0 end-0">
+            <button class="btn btn-link btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                •••
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item menu-item" (click)="editMessage()">Edit</a></li>
+                <li><a class="dropdown-item menu-item" (click)="deleteMessage()">Delete</a></li>
+            </ul>
+        </div>
+
+            
+
+        <div class="message__text">
+            <div>
+                <ng-container *ngIf="message.assigned_profile_image_url; else noImage">
+                    <div class="profile-picture-sm">
+                        <img src="{{ message.assigned_profile_image_url }}" alt="Profile Picture" width="30"
+                        height="24" class="me-2">
+                    </div>
+                    
+                </ng-container>
+                <ng-template #noImage>
+                    <div class="avatar-circle me-2">
+                        {{ message.assigned_initials | uppercase }}
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div>
+            <div class="message-sender">
+                {{message.sender}}
+            </div>
+            <div class="message-content">
+                {{message.content}}
+            </div>
+        </div>
     </div>
+    <div class="message__date small-text">{{message.created_at | date:'short'}}</div>
+
+    
+    
 </div>

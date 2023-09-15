@@ -14,20 +14,44 @@
     color: black;
 }
 
-.fc-daygrid-event-dot{
-    border:unset;
-    margin:0;
+.fc-daygrid-event-dot {
+    border: unset;
+    margin: 0;
 }
 
-.fc-today-button{
-    margin:0.5rem !important;
+.fc-today-button {
+    margin: 0.5rem !important;
 }
 
-.fc-button{
+.fc-button {
     padding: 0.2rem 1rem !important;
     font-size: smaller !important;
 }
 
-.fc-toolbar-title{
+.fc-toolbar-title {
     font-size: smaller !important;
+}
+
+.fc-view-harness {
+    min-height: 500px !important;
+    font-size: xx-small !important;
+}
+
+.fc-event-start {
+    padding: 1px;
+}
+
+.fc-event-time {
+    justify-content: center;
+    display: flex;
+    flex: 1;
+    font-weight: bold;
+}
+
+.fc-event-title {
+    display: none;
+}
+
+.fc-daygrid-day-number {
+    font-weight: bolder;
 }

@@ -7,6 +7,10 @@ export interface Message{
     content: string;
     created_at?: string;
     updated_at?: string;
+    sender?:string;
 
     the_other_user?: User;
+
+    assigned_profile_image_url?: string;
+    assigned_initials?: string;
 }

@@ -1,7 +1,7 @@
 <div class="booking-box mt-3">
     <div *ngIf="conversation?.messages?.length; else no_messages" class="mb-2">
         <div *ngFor="let message of conversation?.messages" >
-            <app-message [message]="message"></app-message>
+            <app-message [message]="message" [conversation]="conversation"></app-message>
         </div>
         <div class="d-flex flex-row mt-5">
             <input class="form-control me-2" [(ngModel)]="newMessage.content" name="NewMessageInput" id="NewMessageInput">

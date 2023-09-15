@@ -1,8 +1,11 @@
 <div class="booking-box mt-3">
+    <div>
+        <h3>Conversations</h3>
+    </div>
     <div *ngIf = "conversations?.length;else no_conversations">
-        <div class="conversation" *ngFor="let conversation of conversations">
+        <div class="conversation" *ngFor="let conversation of conversations" [class.selected-conversation]="conversation.id === selectedConversation?.id">
             <div [class.selected-conversation]="conversation.id === selectedConversation?.id">
-                <app-conversation [conversation]="conversation"></app-conversation>
+                <app-conversation [conversation]="conversation" (click)="selectConversation(conversation)"></app-conversation>
             </div>
         </div>
     </div>

@@ -17,7 +17,20 @@
           <ng-template #profile>
             <div class="">
               <button class="btn btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ user?.name }}
+                <div>
+                  <ng-container *ngIf="user?.profile_image_url; else noImage">
+                      <div class="profile-picture-sm">
+                          <img src="{{ user!.profile_image_url }}" alt="Profile Picture" width="30"
+                          height="24" class="me-2">
+                      </div>
+                      
+                  </ng-container>
+                  <ng-template #noImage>
+                      <div class="avatar-circle me-2">
+                          {{ user!.name.slice(0,2)| uppercase }}
+                      </div>
+                  </ng-template>
+              </div>
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="/profile">Profile</a></li>

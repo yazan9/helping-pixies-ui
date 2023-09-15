@@ -1,26 +1,30 @@
 <div class="conversation" (click)="selectConversation()">
-    <div class="d-flex flex-row align-items-center justify-content-start mb-3">
-        <div class="conversation-user-image">
+    <div class="d-flex flex-row align-items-center justify-content-start">
+        <div class="profile-picture-md">
             <ng-container *ngIf="conversation!.the_other_user.profile_image_url; else noImage">
-              <img src="{{ conversation!.the_other_user.profile_image_url }}" alt="Profile Picture" width="30" height="24" class="me-2">
+              <img src="{{ conversation!.the_other_user.profile_image_url }}" alt="Profile Picture" width="40" height="40" class="me-2">
             </ng-container>
             <ng-template #noImage>
-              <div class="avatar-circle me-2">
+              <div class="avatar-circle-md me-2">
                 {{ conversation!.the_other_user.name.slice(0, 2) | uppercase }}
               </div>
             </ng-template>
           </div>
-          <div class="conversation-user-name">
+          <div>
+            <div class="conversation-user-name">
               {{ conversation!.the_other_user.name }}
           </div>
-    </div>
-    <div class="coversation-last-message">
-        <div class="conversation-last-message-content">
-            {{ conversation!.last_message.content }}
+          <div class="coversation-last-message">
+            <div class="conversation-last-message-content">
+                {{ conversation!.last_message.content }}
+            </div>
+            <div class="conversation-last-message-timestamp form-text d-flex">
+                {{ conversation!.last_message.created_at | date: 'short' }}
+            </div>
         </div>
-        <div class="conversation-last-message-timestamp form-text d-flex justify-content-end">
-            {{ conversation!.last_message.created_at | date: 'short' }}
-        </div>
+          </div>
+          
     </div>
+    
     
   </div>

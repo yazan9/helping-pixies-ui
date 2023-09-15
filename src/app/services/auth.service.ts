@@ -66,6 +66,14 @@ export class AuthService {
     return '';
   }
 
+  public getMyProfileImage(): string {
+    let user = this.getUser();
+    if (user) {
+      return user.profile_image_url;
+    }
+    return '';
+  }
+
   public setUser(user: User){
     this.storageService.setItemToLocalStorage('hp-user', JSON.stringify(user));
     this.user.next(user);
