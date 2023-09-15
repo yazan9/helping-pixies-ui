@@ -3,7 +3,7 @@
       <a class="navbar-brand" href="#">
         <img src="assets/images/logo.png" alt="Logo" width="80" class="d-inline-block align-text-top">
       </a>
-      <div class="d-flex">
+      <div class="d-flex align-items-center">
         
         <div class="dropdown me-3" *ngIf="isLoggedIn;">
           <a class="btn btn-link" href="/conversations"><i class="fa fa-envelope"></i></a>
@@ -16,10 +16,10 @@
           <a *ngIf="!isLoggedIn; else profile" class="btn btn-link me-2" href="/login" role="button">Login</a>
           <ng-template #profile>
             <div class="">
-              <button class="btn btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-link p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <div>
                   <ng-container *ngIf="user?.profile_image_url; else noImage">
-                      <div class="profile-picture-sm">
+                      <div class="profile-picture-xs">
                           <img src="{{ user!.profile_image_url }}" alt="Profile Picture" width="30"
                           height="24" class="me-2">
                       </div>

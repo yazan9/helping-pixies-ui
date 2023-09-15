@@ -1,14 +1,16 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConversationsService } from 'src/app/services/coversations.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { Conversation } from 'src/app/types/conversation';
 import { Message } from 'src/app/types/message';
 
 @Component({
   selector: 'app-conversation-messages',
   templateUrl: './conversation-messages.component.html',
-  styleUrls: ['./conversation-messages.component.css']
+  styleUrls: ['./conversation-messages.component.css'],
 })
 export class ConversationMessagesComponent implements OnInit, OnDestroy{
   conversation: Conversation | null = null;
@@ -16,7 +18,11 @@ export class ConversationMessagesComponent implements OnInit, OnDestroy{
   newMessage: Message = {content: ''};
   profilePicture: string = '';
 
-  constructor(private conversationsService: ConversationsService, private auth: AuthService) {
+  constructor(
+    private conversationsService: ConversationsService, 
+    private auth: AuthService,
+    public utils: UtilsService
+    ) {
   }
 
   ngOnInit(): void {

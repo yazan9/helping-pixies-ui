@@ -2,6 +2,8 @@
 @import '~font-awesome/css/font-awesome.css';
 @import '~intl-tel-input/build/css/intlTelInput.css';
 @import './assets/stylesheets/bootstrap_customized.css';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
 
 /* You can add global styles to this file, and also import other style files */
 body {
@@ -126,6 +128,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.profile-picture-xs img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover; /* This line ensures that the image covers the container without stretching or squishing */
+  border: 1px solid #ccc;
+  padding:1px;
 }
 
 .profile-picture-sm img {

@@ -8,7 +8,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorInterceptor } from './services/auth-interceptor.interceptor';
 import { ToastContainerComponent } from './shared/toast-container/toast-container.component';
@@ -52,7 +52,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [
     AuthInterceptorInterceptor,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true },
+    DatePipe
   ]
   ,
   bootstrap: [AppComponent]

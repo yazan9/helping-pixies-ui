@@ -23,10 +23,10 @@
 
 .menu-item{
     cursor: pointer;
+    font-size: small;
 }
 
 .menu-item:hover{
     background-color: #f5f5f5;
 }
-
 

@@ -1,1 +1,29 @@
 @import '../../../assets/stylesheets/conversations.css';
+.booking-box {
+    height: calc(100vh - 50px);  /* or set to whatever height you need */
+  }
+  
+  .message-container {
+    overflow-y: auto;
+  }
+
+
+  /* For Webkit browsers like Chrome and Safari */
+.message-container::-webkit-scrollbar {
+    width: 5px;  /* width of the scrollbar */
+  }
+  
+  .message-container::-webkit-scrollbar-thumb {
+    background: grey;  /* color of the scroll thumb */
+  }
+  
+  /* For Firefox */
+  .message-container {
+    scrollbar-width: thin;  /* make scrollbar thinner */
+    scrollbar-color: grey transparent;  /* make scrollbar grey */
+  }
+
+  .timestamp{
+    font-size: 12px;
+    color: #999;
+  }

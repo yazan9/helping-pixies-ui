@@ -9,8 +9,13 @@
                 •••
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item menu-item" (click)="editMessage()">Edit</a></li>
-                <li><a class="dropdown-item menu-item" (click)="deleteMessage()">Delete</a></li>
+                <li><a class="dropdown-item menu-item" (click)="editMessage()">
+                    <i class="bi bi-pencil-square"></i>
+                    Edit
+                </a></li>
+                <li><a class="dropdown-item menu-item" (click)="deleteMessage()">
+                    <i class="bi bi-x-circle"></i>
+                    Delete</a></li>
             </ul>
         </div>
 
@@ -32,13 +37,20 @@
                 </ng-template>
             </div>
         </div>
-        <div>
+        <div class="w-100">
             <div class="message-sender">
                 {{message.sender}}
             </div>
-            <div class="message-content">
+            <div class="message-content" *ngIf="!editing; else editMode">
                 {{message.content}}
             </div>
+            <ng-template #editMode>
+                <textarea class="form-control" [(ngModel)]="message.content"></textarea>
+                <div class="d-flex justify-content-end pt-2">
+                    <button class="btn btn-secondary btn-sm" (click)="saveMessage()">Save</button>
+                    <button class="btn btn-light btn-sm ms-2" (click)="cancelEdit()">Cancel</button>
+                </div>
+            </ng-template>
         </div>
     </div>
     <div class="message__date small-text">{{message.created_at | date:'short'}}</div>

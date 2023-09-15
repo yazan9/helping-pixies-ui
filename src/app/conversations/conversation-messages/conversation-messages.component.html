@@ -1,19 +1,25 @@
-<div class="booking-box mt-3">
-    <div *ngIf="conversation?.messages?.length; else no_messages" class="mb-2">
-        <div *ngFor="let message of conversation?.messages" >
-            <app-message [message]="message" [conversation]="conversation"></app-message>
+<div class="booking-box d-flex flex-column">
+    <div class="message-container flex-grow-1">
+        <div *ngIf="conversation?.messages?.length; else no_messages" class="mb-2">
+            <div *ngFor="let message of conversation?.messages; let i = index;">
+                <p class="text-center" *ngIf="utils.chatTimeStamp(i, conversation?.messages)">
+                    <span class="timestamp">{{utils.chatTimeStamp(i, conversation?.messages)}}</span>
+                </p>
+                <app-message [message]="message" [conversation]="conversation"></app-message>
+            </div>
         </div>
+        <ng-template #no_messages>
+            <div class="text-center">
+                <h3>No messages</h3>
+            </div>
+        </ng-template>
+    </div>
+
+    <div class="w-100">
         <div class="d-flex flex-row mt-5">
             <input class="form-control me-2" [(ngModel)]="newMessage.content" name="NewMessageInput" id="NewMessageInput">
 
             <button class="btn btn-success" (click)="sendMessage()"><i class="fa fa-send"></i></button>
         </div>
     </div>
-
-    <ng-template #no_messages>
-        <div class="text-center">
-            <h3>No messages</h3>
-        </div>
-    </ng-template>
-
 </div>

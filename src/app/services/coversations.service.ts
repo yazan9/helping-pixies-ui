@@ -37,12 +37,12 @@ export class ConversationsService {
     return this.http.post<Message>(`conversations/${conversationId}/messages`, message);
   }
 
-  deleteMessage(conversationId: number, messageId: number): Observable<Message>{
-    return this.http.delete<Message>(`conversations/${conversationId}/messages/${messageId}`);
+  deleteMessage(message: Message): Observable<Message>{
+    return this.http.delete<Message>(`conversations/${message.conversation_id}/messages/${message.id}`);
   }
 
-  updateMessage(conversationId: number, messageId: number, message: Message): Observable<Message>{
-    return this.http.put<any>(`conversations/${conversationId}/messages/${messageId}`, message);
+  updateMessage(message: Message): Observable<Message>{
+    return this.http.put<any>(`conversations/${message.conversation_id}/messages/${message.id}`, message);
   }
 
   selectConversation(conversation: Conversation | null): void {
