@@ -12,7 +12,5 @@ export class ConversationComponent {
 
   constructor(private conversationsService:ConversationsService) { }
 
-  public selectConversation(){
-    this.conversationsService.selectConversation(this.conversation);
-  }
+
 }

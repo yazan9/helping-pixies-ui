@@ -31,6 +31,15 @@ export class NavbarComponent implements OnInit, OnDestroy{
         this.user = user;
       })
     );
+
+    this.subscriptions.push(
+      this.conversationsService.selectedConversation$.subscribe(conversation => {
+        let newUnreadCount = this.unread_messages_count - conversation!.unread_messages_count;
+        this.unread_messages_count = Math.min(newUnreadCount, 0)
+      })
+    );
+        
+    this.getUnreadMessagesCount();
   }
 
   logout(): void {
@@ -38,8 +47,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
   }
 
   getUnreadMessagesCount(): void {
-    this.conversationsService.getUnreadCount().subscribe((res) => {
-      this.unread_messages_count = res;
+    this.conversationsService.getUnreadCount().subscribe((res:any) => {
+      this.unread_messages_count = res.unread_messages_count;
     });
   }
 

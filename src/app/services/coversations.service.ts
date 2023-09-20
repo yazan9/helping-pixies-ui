@@ -47,6 +47,15 @@ export class ConversationsService {
 
   selectConversation(conversation: Conversation | null): void {
     this.selectedConversationSource.next(conversation);
+    if(conversation?.unread_messages_count){
+      this.markMessagesAsRead(conversation.id).subscribe(res => {
+        conversation.unread_messages_count = 0;
+      });
+    }
+  }
+
+  markMessagesAsRead(conversationId: number): Observable<any>{
+    return this.http.put<any>(`conversations/${conversationId}/messages/read`, {});
   }
 
   getUnreadCount(): Observable<number>{ // 1

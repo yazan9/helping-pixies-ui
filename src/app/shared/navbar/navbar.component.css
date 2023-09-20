@@ -10,3 +10,16 @@
 .unread-badge{
     margin-left:-10px;
 }
+
+.unread-count {
+    background-color: #0084ff;
+    color: #fff;
+    font-weight: bold;
+    width: 20px;        /* Set width */
+    height: 20px;       /* Set height */
+    border-radius: 50%; /* Make it a circle */
+    font-size: 12px;
+    display: flex;      /* Use flexbox to center text */
+    align-items: center;
+    justify-content: center;
+  }

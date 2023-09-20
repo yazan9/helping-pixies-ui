@@ -1,5 +1,5 @@
-<div class="conversation" (click)="selectConversation()">
-    <div class="d-flex flex-row align-items-center justify-content-start">
+<div class="conversation">
+    <div class="d-flex flex-row align-items-center justify-content-start position-relative">
         <div class="profile-picture-md">
             <ng-container *ngIf="conversation!.the_other_user.profile_image_url; else noImage">
               <img src="{{ conversation!.the_other_user.profile_image_url }}" alt="Profile Picture" width="40" height="40" class="me-2">
@@ -9,6 +9,10 @@
                 {{ conversation!.the_other_user.name.slice(0, 2) | uppercase }}
               </div>
             </ng-template>
+            <!-- Badge for unread messages -->
+      <span *ngIf="conversation!.unread_messages_count" class="unread-count bg-secondary position-absolute top-0 end-0">
+        {{ conversation!.unread_messages_count }}
+      </span>
           </div>
           <div>
             <div class="conversation-user-name">

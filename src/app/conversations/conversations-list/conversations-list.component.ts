@@ -19,10 +19,12 @@ export class ConversationsListComponent {
 
   fetchConversations(): void {
     this.conversationsService.getConversations().subscribe(({conversations, meta}) => {
+      conversations.sort((a, b) => {
+        return b.unread_messages_count - a.unread_messages_count || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+      });
       this.conversations = conversations;
       if(conversations.length){
-        this.conversationsService.selectConversation(conversations[0]);
-        this.selectedConversation = conversations[0];
+        this.selectConversation(conversations[0]);
       }
     });
   }
