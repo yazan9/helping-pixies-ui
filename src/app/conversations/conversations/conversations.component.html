@@ -1,13 +1,13 @@
 
 <div class="row conversations-container m-0">
-    <div class="d-none d-md-block col-md-4 conversations-list">
+    <div class="col-sm-12 d-lg-none back-section position-absolute" *ngIf="this.isMobileView && selectedConversation !== null">
+        <i class="bi bi-arrow-left-circle" style="font-size: 2rem;" (click)="back()"></i> 
+    </div>
+    <div class="col-sm-12 col-md-4 conversations-list" *ngIf="!this.isMobileView || this.selectedConversation === null">
         <app-conversations-list></app-conversations-list>
     </div>
-    <div class="col-sm-12 d-md-none back-section">
-        <button class="btn btn-small" (click)="back()"><i class="bi bi-arrow-left-circle"></i></button>
-        
-    </div>
-    <div class="col-md-8">
+    
+    <div class="col-md-8" *ngIf="!isMobileView || selectedConversation !== null">
         <app-conversation-messages></app-conversation-messages>
     </div>
 </div>

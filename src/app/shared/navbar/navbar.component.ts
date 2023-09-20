@@ -34,6 +34,9 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
     this.subscriptions.push(
       this.conversationsService.selectedConversation$.subscribe(conversation => {
+        if(!conversation){
+          return;
+        }
         let newUnreadCount = this.unread_messages_count - conversation!.unread_messages_count;
         this.unread_messages_count = Math.min(newUnreadCount, 0)
       })

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Conversation } from '../types/conversation';
 import { Meta } from '../types/meta';
 import { Message } from '../types/message';
@@ -10,7 +10,7 @@ import { Message } from '../types/message';
 })
 export class ConversationsService {
   //Observable Sources
-  private selectedConversationSource = new Subject<Conversation | null>();
+  private selectedConversationSource = new BehaviorSubject<Conversation | null>(null);
 
   //Observable Streams
   selectedConversation$ = this.selectedConversationSource.asObservable();

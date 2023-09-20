@@ -24,7 +24,7 @@ export class ConversationsListComponent {
       });
       this.conversations = conversations;
       if(conversations.length){
-        this.selectConversation(conversations[0]);
+        //this.selectConversation(conversations[0]);
       }
     });
   }
