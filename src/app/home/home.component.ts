@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     let isLoggedIn = this.authService.isLoggedIn.subscribe(loggedIn => {
       const isIOS = /iPhone|iPad|iPod/.test(navigator.platform);
-      if (!isIOS) {
+      if (isIOS) {
         this.isIos = true;
         
       }
