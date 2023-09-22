@@ -81,7 +81,7 @@ export class BookingService {
 
   public searchProviders(page: number): Observable<any>{
     //call the api to get the providers
-    return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}&query=${this.query}`);
+    return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}&query=${this.query}&start_at=${this.setStartAt(this.getFrequencyKey(this.selectedFrequency))}&hours=${this.selectedHours}`);
   }
 
   private getFrequencyKey(value: FrequencyType | null): string {
@@ -93,7 +93,7 @@ export class BookingService {
     let booking: Booking = new Booking();
     booking.provider_id = providerId;
     booking.frequency = this.getFrequencyKey(this.selectedFrequency);
-    booking.start_at = this.setStartAt(booking);
+    booking.start_at = this.setStartAt(booking.frequency);
     booking.rate = this._price;
     booking.hours = this.selectedHours;
     booking.offset = this.setBookingOffset(booking)
@@ -137,8 +137,8 @@ export class BookingService {
     return this.getDaysDifference() || 0;
   }
 
-  private setStartAt(booking: Booking): string {
-    if(booking.frequency === "twice_a_week"){
+  private setStartAt(frequency: string): string {
+    if(frequency === "twice_a_week"){
       return this.startDate?.toISOString() || '';
     }
     return this.getSelectedDate().toISOString();

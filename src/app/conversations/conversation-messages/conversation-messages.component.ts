@@ -30,7 +30,6 @@ export class ConversationMessagesComponent implements OnInit, OnDestroy{
     let selectConversationsSubscription = this.conversationsService.selectedConversation$.subscribe(conversation => {
       this.conversation = conversation;
       this.fetchConversationMessages();
-      console.log("ConversationMessagesComponent -> ngOnInit -> conversation")
     });
     this.subscriptions.push(selectConversationsSubscription);
   }

@@ -8,6 +8,7 @@ export interface Message{
     created_at?: string;
     updated_at?: string;
     sender?:string;
+    is_system_message?: boolean;
 
     the_other_user?: User;
 

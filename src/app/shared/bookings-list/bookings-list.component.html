@@ -42,7 +42,7 @@
 
 <ng-template #noBookings>
 	<div class="">
-		You have no bookings yet. Start by clicking the button above to explore providers around you.
+		You have no bookings yet. <span *ngIf="userType === 'client'">Start by clicking the button above to explore providers around you.</span>
 	</div>
 </ng-template>
 
