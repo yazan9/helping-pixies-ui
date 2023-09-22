@@ -15,8 +15,10 @@
             <img src="assets/images/foam.jpg" alt="hmm ... freshh" class="landing-page-image">
     
         </div> -->
+        
         <div class="section-book-now">
             <div class="content-book-now">
+                
     
                 <h1>Professional Cleaning Services</h1>
                 <h2>Choose your cleaning professional and enjoy your free time!</h2>
@@ -24,6 +26,8 @@
                     <a type="button" class="btn btn-secondary btn-lg me-2" href="/book">Book now!</a>
                     <a type="button" class="btn btn-warning btn-lg" id="install-button" style="display: none;">Get the app!</a>
                 </div>
+
+                
                
         
                 <div class="section-features-container">
@@ -48,4 +52,16 @@
     
 </div>
 
+
+<ng-template #IOSInstallPrompt let-modal>
+    <div class="modal-header">
+        <strong>It's better in the app! </strong>
+    </div>
+    <div class="modal-body">
+        <p>Install this app on your iOS device: tap <span class="icon-share"><i class="bi bi-share"></i></span> and then 'Add to Home Screen'.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeIOSPrompt('dismiss')">Dismiss</button>
+    </div>
+</ng-template>
 
