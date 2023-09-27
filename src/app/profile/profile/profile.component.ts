@@ -38,6 +38,7 @@ export class ProfileComponent {
       reader.readAsDataURL(uploadedFile);
       reader.onload = () => {
         this.profilePicture = reader.result as string;
+        this.updateProfilePicture();
       };
     }
   }

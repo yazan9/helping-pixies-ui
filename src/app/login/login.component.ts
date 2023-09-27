@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../types/user';
 import { TokenResponse } from '../types/token-response';
 import { ToastService } from '../services/toast.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,16 +14,24 @@ export class LoginComponent implements OnInit{
   constructor(
     private authService: AuthService, 
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
     ){}
   public user: User = new User();
+  public returnUrl: string = '';
 
   ngOnInit(): void {
-
+    this.route.queryParams.subscribe(params => {
+      this.returnUrl = params['returnUrl'];
+    });
   }
 
   public login() {
     this.authService.login(this.user).subscribe((response: TokenResponse) => {
+      if (this.returnUrl) {
+        this.router.navigate([this.returnUrl], { queryParams: { source: 'login' } });
+        return;
+      }
       if (response.user.user_type == 'provider') {
         this.router.navigate(['/provider']);
       }

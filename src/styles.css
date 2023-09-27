@@ -71,6 +71,17 @@ body {
   font-size: medium;
 }
 
+.avatar-circle-xs{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  font-size: medium;
+}
+
 .iti__flag {
   background-image: url("intl-tel-input/build/img/flags.png");
 }

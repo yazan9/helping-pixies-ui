@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookingService } from 'src/app/services/booking.service';
+import { CoreService } from 'src/app/services/core.service';
 import { ReviewsService } from 'src/app/services/reviews.service';
 import { Provider } from 'src/app/types/provider';
 import { Review } from 'src/app/types/review';
@@ -32,7 +33,8 @@ export class ProviderDetailsModalComponent implements OnInit {
     public reviewsService: ReviewsService, 
     private authService: AuthService,
     private router: Router,
-    public bookingService: BookingService
+    public bookingService: BookingService,
+    public coreService: CoreService 
     ) { }
 
   ngOnInit(): void {
@@ -56,7 +58,8 @@ export class ProviderDetailsModalComponent implements OnInit {
 
   book(): void {
     if(!this.isLoggedIn){
-      this.router.navigate(['/login']);
+      this.coreService.setSavedProvider(this.provider);
+      this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
       this.modal.close();
     }
     else{

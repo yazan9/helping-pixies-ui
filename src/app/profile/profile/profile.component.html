@@ -29,18 +29,18 @@
         <div class="col-sm-12 col-md-6 profile-picture-setting">
             <h3>Profile Picture</h3>
             <div class="profile-picture" *ngIf="!profilePicture; else showPicture">
-                <div class="placeholder" (click)="openUploadDialog()">
+                <div class="placeholder">
                     {{ user!.name.slice(0, 2) | uppercase }}
                 </div>
             </div>
             <ng-template #showPicture>
                 <div class="profile-picture">
-                    <img [src]="profilePicture" class="profile-picture" alt="Profile Picture" (click)="openUploadDialog()" />
+                    <img [src]="profilePicture" class="profile-picture" alt="Profile Picture"/>
                 </div>
             </ng-template>
             <input style="display:none;" type="file" (change)="onFileSelected($event)" #fileInput id="fileInput" accept="image/*">
             
-            <button class="btn btn-primary mt-2" (click)="updateProfilePicture()">Update Picture</button>
+            <button class="btn btn-primary mt-2" (click)="openUploadDialog()">Update Picture</button>
         </div>
     </div>
 </div>

@@ -4,8 +4,9 @@ import { BookingService } from 'src/app/services/booking.service';
 import { Meta } from 'src/app/types/meta';
 import { Provider } from 'src/app/types/provider';
 import { ProviderDetailsModalComponent } from '../provider-details-modal/provider-details-modal.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { CoreService } from 'src/app/services/core.service';
 
 @Component({
   selector: 'app-booking-search',
@@ -24,9 +25,19 @@ export class BookingSearchComponent implements OnInit{
     private config: NgbRatingConfig, 
     private modalService: NgbModal,
     private router: Router,
-    public location: Location) { }
+    public location: Location,
+    public route: ActivatedRoute,
+    private coreService: CoreService
+    ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const source = params['source'];
+      if(source === 'login' && this.coreService.getSavedProvider() !== null){
+        this.openProvidersPage(this.coreService.getSavedProvider());
+      }
+    });
+
     if(!this.bookingService.selectedFrequency){
       this.router.navigate(['/book']);
       return;
@@ -81,4 +92,9 @@ export class BookingSearchComponent implements OnInit{
 		const modalRef = this.modalService.open(ProviderDetailsModalComponent, {fullscreen: true, scrollable: true});
 		modalRef.componentInstance.provider = this.providers.find((provider) => provider.id === providerId);
 	}
+
+  openProvidersPage(provider: Provider | null): void {
+    const modalRef = this.modalService.open(ProviderDetailsModalComponent, {fullscreen: true, scrollable: true});
+		modalRef.componentInstance.provider = provider;
+  }
 }

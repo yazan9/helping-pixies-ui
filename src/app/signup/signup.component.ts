@@ -19,7 +19,7 @@ declare var google: any;
 })
 export class SignupComponent implements OnInit, AfterViewInit{
   public user: User = new User();
-  public countryCode: string = '';
+  public countryCode: string = '+1';
   public selectedLocationOption: string = 'update';
   isDetecingLocation: boolean = false;
 
@@ -194,8 +194,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
     return this.user.email.trim() !== '' && 
     this.user.name.trim() !== '' && 
     this.user.phone.trim() !== '' && 
-    this.user.password.trim() !== '' && 
-    this.countryCode.trim() !== '';
+    this.user.password.trim() !== ''
   }
 
   private clearForm(){

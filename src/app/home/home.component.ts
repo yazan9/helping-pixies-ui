@@ -16,32 +16,27 @@ export class HomeComponent implements OnInit {
 
   deferredPrompt: any;
   isIos: boolean = false;
-  public test: string = '';
 
   ngOnInit(): void {
     let isLoggedIn = this.authService.isLoggedIn.subscribe(loggedIn => {
       this.isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
-      this.test = navigator.userAgent;
       if(this.isIos){
-        this.test += '<br> is ios';
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
         if (isStandalone) {
-          this.test += '<br> is standalone';
         }        
         else{
-          this.test += '<br> is not standalone';
           this.showInstallButton();
         }
       }
 
       window.addEventListener('beforeinstallprompt', (e) => this.beforeInstallPrompt(e));
-      // let user = this.authService.getUser();
-      // if(user?.user_type === 'provider'){
-      //   this.router.navigate(['/provider']);
-      // }
-      // else if(user?.user_type === 'client'){
-      //   this.router.navigate(['/dashboard']);
-      // }
+      let user = this.authService.getUser();
+      if(user?.user_type === 'provider'){
+        this.router.navigate(['/provider']);
+      }
+      else if(user?.user_type === 'client'){
+        this.router.navigate(['/dashboard']);
+      }
     });
   }
 
