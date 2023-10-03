@@ -22,15 +22,15 @@ export class LocationService {
                 observer.next(position);
                 observer.complete();
               }, (err) => {
-                observer.error('Geolocation is not supported by this browser.');
+                observer.error('Geolocation is not supported by this browser. ex 1');
               });
             } else {
-              observer.error('Geolocation is not supported by this browser.');
+              observer.error('Geolocation is not supported by this browser. ex 2');
             }
           }
         );
       } else {
-        observer.error('Geolocation is not supported by this browser.');
+        observer.error('Geolocation is not supported by this browser. ex 3');
       }
     });
   }
