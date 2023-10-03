@@ -23,7 +23,7 @@ export class BookingLocationComponent implements OnInit{
       this.setLocation(position.coords.latitude, position.coords.longitude);
     }, (err) => {
       this.locationLoaded = true;
-      this.toast.showError('Geolocation is not supported by this browser.');
+      this.toast.showError(err);
     });
   }
 
