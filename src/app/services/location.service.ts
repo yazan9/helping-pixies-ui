@@ -25,7 +25,7 @@ export class LocationService {
                 observer.error('Geolocation is not supported by this browser. ex 1');
               });
             } else {
-              observer.error('Geolocation is not supported by this browser. ex 2');
+              observer.error(err);
             }
           }
         );
