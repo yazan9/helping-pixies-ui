@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LocationService } from '../services/location.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private authService: AuthService, public router: Router, public modalService: NgbModal){}
+  constructor(private authService: AuthService, public router: Router, public modalService: NgbModal,
+    private locationService: LocationService){}
 
   @ViewChild('IOSInstallPrompt') IOSInstallPrompt!: TemplateRef<any>;
 
@@ -52,7 +54,7 @@ export class HomeComponent implements OnInit {
     installButton!.addEventListener('click', () => this.installPWA());
   }
 
-  installPWA(): void {
+  doInstallPwa(): void {
     if(this.isIos){
       this.showIOSInstallPrompt();
       return;
@@ -71,6 +73,21 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  installPWA(): void {
+    //trigger location prompt first
+    this.isLocationPermissionTriggered().then((res) => {
+      // if not triggered before, trigger it now so that permissions show before the PWA is installed
+      if(!res){
+        this.locationService.getLocation().subscribe(() => {
+          this.doInstallPwa();
+        });
+      }
+      else{
+        this.doInstallPwa();
+      }
+    });
+  }
+
   showIOSInstallPrompt(): void {
     // Show your custom iOS install prompt UI here
     const modalRef = this.modalService.open(this.IOSInstallPrompt);    
@@ -78,5 +95,11 @@ export class HomeComponent implements OnInit {
 
   closeIOSPrompt(result: string){
     this.modalService.dismissAll();
+  }
+
+  isLocationPermissionTriggered(): Promise<boolean> {
+    return navigator.permissions.query({name: 'geolocation'}).then((res) => {
+      return res.state !== 'prompt';
+    });
   }
 }

@@ -8,6 +8,11 @@ export class LocationService {
   
   constructor() {}
 
+  //errors:
+  // 1. Location error
+  // 2. Location permission denied
+  // 3. Geolocation is not supported by this browser
+
   public getLocation(): Observable<GeolocationPosition> {
     return new Observable(observer => {
       if (navigator.geolocation) {
@@ -22,15 +27,15 @@ export class LocationService {
                 observer.next(position);
                 observer.complete();
               }, (err) => {
-                observer.error('Geolocation is not supported by this browser. ex 1');
+                observer.error(1);
               });
             } else {
-              observer.error(err);
+              observer.error(2);
             }
           }
         );
       } else {
-        observer.error('Geolocation is not supported by this browser. ex 3');
+        observer.error(3);
       }
     });
   }

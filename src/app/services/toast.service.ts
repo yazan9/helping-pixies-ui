@@ -21,8 +21,8 @@ export class ToastService {
 		this.toasts.splice(0, this.toasts.length);
 	}
 
-	showError(text: string) {
-		this.show(text, { classname: 'bg-danger text-light', delay: 5000 });
+	showError(text: string, delay: number = 5000) {
+		this.show(text, { classname: 'bg-danger text-light', delay: delay });
 	}
 
 	showSuccess(text: string) {
