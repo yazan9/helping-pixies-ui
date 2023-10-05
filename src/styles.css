@@ -37,6 +37,10 @@ body {
   border-color: red;
 }
 
+.text-invalid{
+  color: red;
+}
+
 .dropdown-item {
   cursor: pointer;
 }

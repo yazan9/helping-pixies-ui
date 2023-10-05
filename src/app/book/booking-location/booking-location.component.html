@@ -1,19 +1,29 @@
 <h3>Location</h3>
 <hr>
-<div *ngIf="locationLoaded;else locationNotLoaded">
-    <p>We have identified your location as:</p></div>
-<ng-template #locationNotLoaded>
+<div *ngIf="locationLoaded;else locationLoading">
+    
+    <p *ngIf="locationDetectedSuccessfully;else locationNotDetected">We have identified your location as:</p>
+    <div class="range-selector-container">
+        <div class="d-flex">
+            <input type="zip" class="form-control me-2" id="zipInput" name="zip" [class.invalid]="!locationDetectedSuccessfully && !locationManuallyEntered"
+                [(ngModel)]="bookingService.zipCode">
+            <button type="button" class="btn btn-dark" (click)="updatePostalCode()">Update</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #locationNotDetected>
+    <p *ngIf="locationManuallyEntered;else locationNotEnteredAtAll">Postal Code</p>
+</ng-template>
+
+<ng-template #locationNotEnteredAtAll>
+    <p class="text-invalid" placement="start" ngbTooltip="Tooltip on top">Location not detected</p>
+</ng-template>
+
+<ng-template #locationLoading>
     <div class="loading-dots">
         <div></div>
         <div></div>
         <div></div>
       </div>
 </ng-template>
-
-<div class="range-selector-container">
-    <div class="d-flex">
-        <input type="zip" class="form-control me-2" id="zipInput" name="zip"
-            [(ngModel)]="bookingService.zipCode">
-        <button type="button" class="btn btn-dark" (click)="updatePostalCode()">Update</button>
-    </div>
-</div>

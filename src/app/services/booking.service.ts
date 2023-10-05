@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FrequencyType } from '../types/frequency-type';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { Booking } from '../types/booking';
 
@@ -79,10 +79,32 @@ export class BookingService {
     this.broadcastBookingLocationUpdated(latitude, longitude, this.zipCode);
   }
 
-  public searchProviders(page: number): Observable<any>{
-    //call the api to get the providers
-    return this.http.get(`search?latitude=${this._latitude}&longitude=${this._longitude}&radius=${this.radius}&zip_code=${this.zipCode}&page=${page}&query=${this.query}&start_at=${this.setStartAt(this.getFrequencyKey(this.selectedFrequency))}&hours=${this.selectedHours}`);
-  }
+  public searchProviders(page: number): Observable<any> {
+    // Start with an empty HttpParams object
+    let params = new HttpParams();
+
+    // Conditionally add latitude and longitude if they are not 0
+    if (this._latitude !== 0) {
+        params = params.set('latitude', this._latitude.toString());
+    }
+    if (this._longitude !== 0) {
+        params = params.set('longitude', this._longitude.toString());
+    }
+
+    // Add the other parameters
+    params = params
+        .set('radius', this.radius)
+        .set('zip_code', this.zipCode)
+        .set('page', page.toString())
+        .set('query', this.query)
+        .set('start_at', this.setStartAt(this.getFrequencyKey(this.selectedFrequency)))
+        .set('hours', this.selectedHours);
+
+    // Call the API using the constructed parameters
+    return this.http.get('search', { params: params });
+}
+
+
 
   private getFrequencyKey(value: FrequencyType | null): string {
     if (value === null) return '';

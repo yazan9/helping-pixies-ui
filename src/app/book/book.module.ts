@@ -5,7 +5,7 @@ import { MainComponent } from './main/main.component';
 import { BookComponent } from './book.component';
 import { FrequencyComponent } from './frequency/frequency.component';
 import { FormsModule } from '@angular/forms';
-import { NgbDatepicker, NgbRatingModule, NgbTimepicker } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepicker, NgbRatingModule, NgbTimepicker, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookingSidebarComponent } from './booking-sidebar/booking-sidebar.component';
 import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 import { BookingPriceComponent } from './booking-price/booking-price.component';
@@ -31,7 +31,8 @@ import { ProviderDetailsModalComponent } from './provider-details-modal/provider
     FormsModule,
     NgbDatepicker,
     NgbTimepicker,
-    NgbRatingModule
+    NgbRatingModule,
+    NgbTooltipModule
   ]
 })
 export class BookModule { }

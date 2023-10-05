@@ -11,6 +11,8 @@ declare var google: any;  // Declare google to let TypeScript know that google w
 })
 export class BookingLocationComponent implements OnInit{
   public locationLoaded: boolean = false;
+  public locationDetectedSuccessfully: boolean = false;
+  public locationManuallyEntered: boolean = false;
   constructor(
     public bookingService: BookingService, 
     private locationService: LocationService,
@@ -20,10 +22,11 @@ export class BookingLocationComponent implements OnInit{
   ngOnInit(): void {
     this.locationService.getLocation().subscribe((position) => {
       this.locationLoaded = true;
+      this.locationDetectedSuccessfully = true;
       this.setLocation(position.coords.latitude, position.coords.longitude);
     }, (err) => {
+      this.locationDetectedSuccessfully = false;
       this.locationLoaded = true;
-      this.toast.showError(err);
     });
   }
 
@@ -56,12 +59,17 @@ export class BookingLocationComponent implements OnInit{
       };
     }[], status: string) => {
       this.locationLoaded = true;
+      this.locationManuallyEntered = true;
       if (status === 'OK') {
+        this.locationManuallyEntered = true;
         const latitude = results[0].geometry.location.lat();
         const longitude = results[0].geometry.location.lng();
         this.bookingService.updateLocation(latitude, longitude, this.bookingService.zipCode);
-      } else {
-        this.toast.showError('No results found');      }
+      }
+      else{
+        this.locationManuallyEntered = false;
+        this.toast.showError('Hmm, looks like google is not able to find this postal code. Please enter a postal code for a nearby area instead.');
+      }
     });
   }
 
