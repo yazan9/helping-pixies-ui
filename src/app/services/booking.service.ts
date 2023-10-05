@@ -46,7 +46,7 @@ export class BookingService {
       month: this.dateStruct.month
     };
     this.selectedTime = {
-      hour: 0,
+      hour: 9,
       minute: 0 
     };
   }

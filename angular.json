@@ -21,7 +21,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/logo4.ico",
               "src/assets",
               "src/manifest.webmanifest"
             ],
@@ -93,7 +93,7 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              "src/favicon.ico",
+              "src/logo4.ico",
               "src/assets",
               "src/manifest.webmanifest"
             ],

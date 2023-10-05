@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row pt-5 pb-5">
     <div class="col-sm-12 col-md-6">
         
         <div class="mb-4">
@@ -19,7 +19,10 @@
                         <h2>Which day would you like to start?</h2>
                     </div>
                     <div *ngIf="!showRangeDatePicker; else rangeSelection">
-                        <ngb-datepicker #dp [(ngModel)]="bookingService.dateStruct" (navigate)="bookingService.selectedDate = $event.next" name="selectedDate"></ngb-datepicker>
+                        <ngb-datepicker #dp [(ngModel)]="bookingService.dateStruct" 
+                        (navigate)="bookingService.selectedDate = $event.next" 
+                        name="selectedDate"
+                        [minDate]="mindate"></ngb-datepicker>
                     </div>
                     <ng-template #rangeSelection>
                         <div>

@@ -49,6 +49,9 @@ export class HomeComponent implements OnInit {
   }
 
   showInstallButton(): void {
+    if(!this.isMobileDevice()){
+      return;
+    }
     const installButton = document.getElementById('install-button');
     installButton!.style.display = 'block';
     installButton!.addEventListener('click', () => this.installPWA());
@@ -101,5 +104,9 @@ export class HomeComponent implements OnInit {
     return navigator.permissions.query({name: 'geolocation'}).then((res) => {
       return res.state !== 'prompt';
     });
+  }
+
+  isMobileDevice(): boolean {
+    return window.innerWidth <= 768;
   }
 }

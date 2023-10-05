@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/services/booking.service';
 import { Location } from '@angular/common';
 import { FrequencyType } from 'src/app/types/frequency-type';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-main',
@@ -18,6 +20,7 @@ export class MainComponent implements OnInit {
 
   fromDate: NgbDate;
   toDate: NgbDate | null = null;
+  mindate: NgbDateStruct;
   
   constructor(
     public bookingService: BookingService, 
@@ -28,12 +31,14 @@ export class MainComponent implements OnInit {
 	  this.bookingService.startDate = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day);
       this.toDate = calendar.getNext(calendar.getToday(), 'd', 2);
 	  this.bookingService.endDate = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day);
+	  this.mindate = new NgbDate(moment().year(), moment().month() + 1, moment().date());
   }
 
   ngOnInit(): void {
     if(!this.bookingService.selectedFrequency){
       this.router.navigate(['/book'])
     }
+
 	this.setShowRangeDatePicker();
 	this.bookingService.bookingLocationUpdated$.subscribe((location: {lat: number, lng: number, postalCode: string}) => {
 		this.locationReceived = true;

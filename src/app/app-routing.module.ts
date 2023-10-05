@@ -9,35 +9,43 @@ import { PrivacyPolicyComponent } from './static/privacy-policy/privacy-policy.c
 import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-service.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SeoGuard } from './services/seo.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component : HomeComponent
+    component : HomeComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'signup',
-    component: SignupComponent
+    component: SignupComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'privacy-policy',
-    component: PrivacyPolicyComponent
+    component: PrivacyPolicyComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'terms-of-service',
-    component: TermsOfServiceComponent
+    component: TermsOfServiceComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'confirm-email',
-    component: ConfirmEmailComponent
+    component: ConfirmEmailComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'reset-password',
-    component: ResetPasswordComponent
+    component: ResetPasswordComponent,
+    canActivate: [SeoGuard]
   },
   {
     path: 'book',
@@ -49,15 +57,18 @@ const routes: Routes = [
   },
   {
     path : 'provider',
-    loadChildren: () => import('./provider/provider.module').then(m => m.ProviderModule)
+    loadChildren: () => import('./provider/provider.module').then(m => m.ProviderModule),
+    canActivate: [SeoGuard]
   },
   {
     path : 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+    canActivate: [SeoGuard]
   },
   {
     path : 'conversations',
-    loadChildren: () => import('./conversations/conversations.module').then(m => m.ConversationsModule)
+    loadChildren: () => import('./conversations/conversations.module').then(m => m.ConversationsModule),
+    canActivate: [SeoGuard]
   }
 ];
 
