@@ -41,7 +41,7 @@ export class MainComponent implements OnInit {
 
 	this.setShowRangeDatePicker();
 	this.bookingService.bookingLocationUpdated$.subscribe((location: {lat: number, lng: number, postalCode: string}) => {
-		this.locationReceived = true;
+		this.locationReceived = location.lat === 0 && location.lng === 0 ? false : true;
 	});
   }
 

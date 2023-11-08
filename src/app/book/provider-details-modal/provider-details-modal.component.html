@@ -8,8 +8,7 @@
         {{ provider.distance < 1 ? "Less than 1 km from you" : provider.distance + " km from you"}}
     </p>
     <p>
-        <ngb-rating [(rate)]="provider.average_rating"></ngb-rating>
-        {{ provider.average_rating }}
+       <app-review [average_rating]="provider.average_rating" [ratings_count]="provider.ratings_count"></app-review>
     </p>
     <p>
         {{ provider.description }}
@@ -31,8 +30,7 @@
     <div class="flex-grow-1">
         <div *ngFor="let review of reviews">
             <p>
-                <ngb-rating [(rate)]="review.rating"></ngb-rating>
-                {{ review.rating }}
+                <app-review [average_rating]="review.rating" [ratings_count]="0"></app-review>
             </p>
             <p>
                 {{ review.content }}

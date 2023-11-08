@@ -7,6 +7,8 @@ import { ProviderDetailsModalComponent } from '../provider-details-modal/provide
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CoreService } from 'src/app/services/core.service';
+import { AvatarService } from 'src/app/services/avatar.service';
+import { FrequencyType } from 'src/app/types/frequency-type';
 
 @Component({
   selector: 'app-booking-search',
@@ -27,7 +29,8 @@ export class BookingSearchComponent implements OnInit{
     private router: Router,
     public location: Location,
     public route: ActivatedRoute,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private avatarService: AvatarService
     ) { }
 
   ngOnInit(): void {
@@ -38,10 +41,15 @@ export class BookingSearchComponent implements OnInit{
       }
     });
 
-    if(!this.bookingService.selectedFrequency){
-      this.router.navigate(['/book']);
-      return;
-    }
+    //test block
+    // if(!this.bookingService.selectedFrequency){
+    //   this.router.navigate(['/book']);
+    //   return;
+    // }
+    this.bookingService.selectedFrequency = FrequencyType.once;
+    // end of test block
+
+
     this.radius = this.bookingService.radius;
     this.fetchData(1);
 
@@ -78,10 +86,6 @@ export class BookingSearchComponent implements OnInit{
       this.loading = false;
       this.providers = response.users;
       this.meta = response.meta;
-      this.providers.forEach((provider) => {
-        provider.description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
-        provider.distance
-      });
     }, (error) => {
       alert('Error fetching providers');
       this.loading = false;
@@ -96,5 +100,9 @@ export class BookingSearchComponent implements OnInit{
   openProvidersPage(provider: Provider | null): void {
     const modalRef = this.modalService.open(ProviderDetailsModalComponent, {fullscreen: true, scrollable: true});
 		modalRef.componentInstance.provider = provider;
+  }
+
+  getMin(name: string){
+    return Math.min(2, name.length);
   }
 }

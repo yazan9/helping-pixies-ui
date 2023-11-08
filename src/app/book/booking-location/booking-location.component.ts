@@ -10,9 +10,10 @@ declare var google: any;  // Declare google to let TypeScript know that google w
   styleUrls: ['./booking-location.component.css']
 })
 export class BookingLocationComponent implements OnInit{
-  public locationLoaded: boolean = false;
+  public locationLoading: boolean = false;
   public locationDetectedSuccessfully: boolean = false;
   public locationManuallyEntered: boolean = false;
+  public locationRequested: boolean = false;
   constructor(
     public bookingService: BookingService, 
     private locationService: LocationService,
@@ -20,14 +21,7 @@ export class BookingLocationComponent implements OnInit{
     ) { }
   
   ngOnInit(): void {
-    this.locationService.getLocation().subscribe((position) => {
-      this.locationLoaded = true;
-      this.locationDetectedSuccessfully = true;
-      this.setLocation(position.coords.latitude, position.coords.longitude);
-    }, (err) => {
-      this.locationDetectedSuccessfully = false;
-      this.locationLoaded = true;
-    });
+    
   }
 
   public setLocation(lat: number, lng: number){
@@ -48,7 +42,7 @@ export class BookingLocationComponent implements OnInit{
   }
 
   updatePostalCode(): void {
-    this.locationLoaded = false;
+    this.locationLoading = true;
     const geocoder = new google.maps.Geocoder;
 
     geocoder.geocode({ 'address': this.bookingService.zipCode }, (results: {
@@ -58,18 +52,33 @@ export class BookingLocationComponent implements OnInit{
         };
       };
     }[], status: string) => {
-      this.locationLoaded = true;
+      this.locationLoading = false;
       this.locationManuallyEntered = true;
       if (status === 'OK') {
         this.locationManuallyEntered = true;
+        this.locationDetectedSuccessfully = true;
         const latitude = results[0].geometry.location.lat();
         const longitude = results[0].geometry.location.lng();
         this.bookingService.updateLocation(latitude, longitude, this.bookingService.zipCode);
       }
       else{
-        this.locationManuallyEntered = false;
+        this.locationDetectedSuccessfully = false;
         this.toast.showError('Hmm, looks like google is not able to find this postal code. Please enter a postal code for a nearby area instead.');
+        this.bookingService.updateLocation(0, 0, '');
       }
+    });
+  }
+
+  public getPostalCode(): void{
+    this.locationRequested = true;
+    this.locationLoading = true;
+    this.locationService.getLocation().subscribe((position) => {
+      this.locationLoading = false;
+      this.locationDetectedSuccessfully = true;
+      this.setLocation(position.coords.latitude, position.coords.longitude);
+    }, (err) => {
+      this.locationDetectedSuccessfully = false;
+      this.locationLoading = false;
     });
   }
 

@@ -1,0 +1,7 @@
+<ng-container *ngIf="average_rating;else noRatings">
+    <ngb-rating [(rate)]="average_rating"></ngb-rating>
+    {{ average_rating }} <span *ngIf="ratings_count">({{ratings_count}} reviews)</span>
+</ng-container>
+<ng-template #noRatings>
+    No ratings yet
+</ng-template>

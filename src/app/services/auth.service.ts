@@ -85,8 +85,6 @@ export class AuthService {
     this.loggedIn.next(true);
   }
 
-  
-
   private removeTokensAndUser(): void {
     this.storageService.removeItemFromLocalStorage('hp-token');
     this.storageService.removeItemFromLocalStorage('hp-user');

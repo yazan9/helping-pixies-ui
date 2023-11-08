@@ -5,13 +5,14 @@ import { MainComponent } from './main/main.component';
 import { BookComponent } from './book.component';
 import { FrequencyComponent } from './frequency/frequency.component';
 import { FormsModule } from '@angular/forms';
-import { NgbDatepicker, NgbRatingModule, NgbTimepicker, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepicker, NgbTimepicker, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookingSidebarComponent } from './booking-sidebar/booking-sidebar.component';
 import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 import { BookingPriceComponent } from './booking-price/booking-price.component';
 import { BookingLocationComponent } from './booking-location/booking-location.component';
 import { BookingSearchComponent } from './booking-search/booking-search.component';
 import { ProviderDetailsModalComponent } from './provider-details-modal/provider-details-modal.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,8 +32,8 @@ import { ProviderDetailsModalComponent } from './provider-details-modal/provider
     FormsModule,
     NgbDatepicker,
     NgbTimepicker,
-    NgbRatingModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    SharedModule
   ]
 })
 export class BookModule { }

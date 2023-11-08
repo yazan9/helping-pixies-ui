@@ -77,18 +77,7 @@ export class HomeComponent implements OnInit {
   }
 
   installPWA(): void {
-    //trigger location prompt first
-    this.isLocationPermissionTriggered().then((res) => {
-      // if not triggered before, trigger it now so that permissions show before the PWA is installed
-      if(!res){
-        this.locationService.getLocation().subscribe(() => {
-          this.doInstallPwa();
-        });
-      }
-      else{
-        this.doInstallPwa();
-      }
-    });
+    this.doInstallPwa();
   }
 
   showIOSInstallPrompt(): void {

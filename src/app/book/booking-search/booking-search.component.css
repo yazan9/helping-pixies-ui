@@ -14,3 +14,24 @@ i {
 .filled.low {
     color: #ff1e1e;
 }
+
+.page-link{
+    color: black;
+}
+
+.page-item.active > .page-link {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+    font-weight: 700;
+}
+
+/* For most browsers: Chrome, Edge, and Safari */
+input[type="range"]::-webkit-slider-thumb {
+    background-color: orange;
+}
+
+/* For Firefox */
+input[type="range"]::-moz-range-thumb {
+    background-color: orange;
+}

@@ -17,6 +17,11 @@
                     <label for="phone" class="form-label">Phone:</label>
                     <input type="tel" class="form-control" id="phone" [(ngModel)]="user!.phone" name="phone">
                 </div>
+
+                <div class="col-12">
+                    <label for="description" class="form-label">Write a little about yourself</label>
+                    <textarea class="form-control" id="description" [(ngModel)]="user!.description" name="description"></textarea>
+                </div>
                 <!-- Add other fields as needed -->
 
                 <div class="col-12">

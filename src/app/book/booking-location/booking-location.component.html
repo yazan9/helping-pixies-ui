@@ -1,6 +1,45 @@
 <h3>Location</h3>
 <hr>
-<div *ngIf="locationLoaded;else locationLoading">
+
+<div *ngIf="!locationRequested;else locationRequestInitialized">
+    <p>Please enter a postal code or click  
+        <button class="btn btn-link p-0" (click)="getPostalCode()">get automatically</button>
+    </p>
+    <ng-container>
+        <ng-container *ngTemplateOutlet="postalCodeInput"></ng-container>
+    </ng-container>
+    
+</div>
+
+<ng-template #postalCodeInput>
+    <div class="range-selector-container">
+        <div class="d-flex">
+            <input type="zip" class="form-control me-2" id="zipInput" name="zip" [class.invalid]="!locationDetectedSuccessfully"
+                [(ngModel)]="bookingService.zipCode">
+            <button type="button" class="btn btn-dark" (click)="updatePostalCode()">Update</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #locationRequestInitialized>
+    <div *ngIf="locationLoading;else locationLoaded">
+        <div class="loading-dots">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #locationLoaded>
+    <p>Postal Code</p>
+    <ng-container>
+        <ng-container *ngTemplateOutlet="postalCodeInput"></ng-container>
+    </ng-container>
+</ng-template>
+
+
+<!-- <div *ngIf="locationLoaded;else locationLoading">
     
     <p *ngIf="locationDetectedSuccessfully;else locationNotDetected">We have identified your location as:</p>
     <div class="range-selector-container">
@@ -17,7 +56,9 @@
 </ng-template>
 
 <ng-template #locationNotEnteredAtAll>
-    <p class="text-invalid" placement="start" ngbTooltip="Tooltip on top">Location not detected</p>
+    <p class="text-invalid" placement="start" ngbTooltip="Tooltip on top">Location not detected (
+        <button class="btn btn-link" (click)="getPostalCode()">Get automatically</button>
+    )</p>
 </ng-template>
 
 <ng-template #locationLoading>
@@ -26,4 +67,4 @@
         <div></div>
         <div></div>
       </div>
-</ng-template>
+</ng-template> -->

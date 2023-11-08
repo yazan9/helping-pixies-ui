@@ -20,7 +20,9 @@ export class ProviderDetailsModalComponent implements OnInit {
     name: '',
     description: '',
     distance: 0,
-    average_rating: 0
+    average_rating: 0,
+    profile_image_url: '',
+    ratings_count: 0
   }
 
   public isLoggedIn: boolean = false;

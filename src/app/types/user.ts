@@ -11,6 +11,9 @@ export class User{
     longitude: string = '';
     profile_image_url: string = '';
     address: string = '';
+    description: string = '';
+    average_rating: number = 0;
+    ratings_count: number = 0;
 
     constructor(){}
 }
