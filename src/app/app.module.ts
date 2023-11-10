@@ -23,6 +23,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { BubblesComponent } from './bubbles/bubbles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { DoConfirmEmailComponent } from './do-confirm-email/do-confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     TermsOfServiceComponent,
     ConfirmEmailComponent,
     ResetPasswordComponent,
-    BubblesComponent
+    BubblesComponent,
+    DoConfirmEmailComponent
   ],
   imports: [
     BrowserModule,

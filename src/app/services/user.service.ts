@@ -26,4 +26,8 @@ export class UserService {
   public broadcastPhoneNumberValidity(isValid: boolean): void {
     this.phoneNumberValiditySource.next(isValid);
   }
+
+  public confirmEmail(token: string): Observable<any> {
+    return this.http.get<any>(`confirmation?confirmation_token=${token}`);
+  }
 }

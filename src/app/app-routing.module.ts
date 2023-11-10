@@ -10,6 +10,7 @@ import { TermsOfServiceComponent } from './static/terms-of-service/terms-of-serv
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SeoGuard } from './services/seo.guard';
+import { DoConfirmEmailComponent } from './do-confirm-email/do-confirm-email.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,11 @@ const routes: Routes = [
   {
     path: 'confirm-email',
     component: ConfirmEmailComponent,
+    canActivate: [SeoGuard]
+  },
+  {
+    path: 'do-confirm-email',
+    component: DoConfirmEmailComponent,
     canActivate: [SeoGuard]
   },
   {
