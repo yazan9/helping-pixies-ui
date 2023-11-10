@@ -31,6 +31,8 @@ export class SignupComponent implements OnInit, AfterViewInit{
 
   public policyAgreed: boolean = false;
 
+  public loading: boolean = false;
+
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('noLocationConfirmation') noLocationConfirmation!: TemplateRef<any>;
@@ -91,10 +93,14 @@ export class SignupComponent implements OnInit, AfterViewInit{
     this.user.phone = this.countryCode + this.user.phone;
     this.user.address = this.user.user_type === 'provider' ? this.postalCode : this.address;
 
+    this.loading = true;
+
     this.authService.register(this.user).subscribe((response) => {
+      this.loading = false;
       this.router.navigate(['/confirm-email'], { queryParams: { email: this.user.email } });
       this.clearForm();
     }, (error) => {
+      this.loading = false;
       if(error?.error?.errors?.length){
         error.error.errors.forEach((err: string) => {
           this.toastService.showError(err);

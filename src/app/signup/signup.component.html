@@ -92,7 +92,12 @@
                   </div>
     
                 <div class="col-12">
-                  <button type="button" class="btn btn-primary" (click)="signupClicked(signupForm)">Sign up</button>
+                  <button *ngIf="!loading;" type="button" class="btn btn-primary" (click)="signupClicked(signupForm)">Sign up</button>
+                  <div class="loading-dots" *ngIf="loading">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
                 </div>
               </form>
         </div>
