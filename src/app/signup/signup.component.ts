@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from '../static/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from '../static/terms-of-service/terms-of-service.component';
 import { LocationService } from '../services/location.service';
+import * as moment from 'moment-timezone';
 declare var google: any;
 
 @Component({
@@ -92,6 +93,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
 
     this.user.phone = this.countryCode + this.user.phone;
     this.user.address = this.user.user_type === 'provider' ? this.postalCode : this.address;
+    this.user.time_zone = moment.tz.guess();
 
     this.loading = true;
 

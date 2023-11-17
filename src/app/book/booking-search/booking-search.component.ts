@@ -41,13 +41,10 @@ export class BookingSearchComponent implements OnInit{
       }
     });
 
-    //test block
-    // if(!this.bookingService.selectedFrequency){
-    //   this.router.navigate(['/book']);
-    //   return;
-    // }
-    this.bookingService.selectedFrequency = FrequencyType.once;
-    // end of test block
+    if(!this.bookingService.selectedFrequency){
+      this.router.navigate(['/book']);
+      return;
+    }
 
 
     this.radius = this.bookingService.radius;

@@ -14,6 +14,7 @@ export class User{
     description: string = '';
     average_rating: number = 0;
     ratings_count: number = 0;
+    time_zone: string = '';
 
     constructor(){}
 }
