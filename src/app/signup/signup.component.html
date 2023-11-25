@@ -39,14 +39,14 @@
                   [class.invalid]="signupForm.controls['name'] && signupForm.controls['name'].invalid && signupForm.controls['name'].touched">                  
                 </div>
 
-                <div class="col-12">
+                <!-- <div class="col-12">
                   <div>
-                    <label for="inputPhone" class="form-label">Phone*</label>
+                    <label for="inputPhone" class="form-label">Phone</label>
                   </div>
                   <div>
                     <app-phone-input (countryChanged)="countryChanged($event)" (phoneNumberChanged)="phoneNumberChanged($event)"></app-phone-input>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-12">
                   <label for="inputRegistrationType" class="form-label">I will be</label>
@@ -56,21 +56,21 @@
                   </select>
                 </div>
 
-                <div class="col-12" [class.d-none]="user.user_type === 'client'">
+                <!-- <div class="col-12" [class.d-none]="user.user_type === 'client'">
                   <label for="inputName" class="form-label">Postal Code</label>
                   <input type="text" class="form-control" name="location" [(ngModel)]="postalCode" 
                    id="inputPostalCode">     
                   <div class="form-text">
                     By sharing your postal code, customers around you will be able to find you more easily.
                   </div>             
-                </div>
+                </div> -->
 
-                <div class="col-12" [class.d-none]="user.user_type === 'provider'">
+                <!-- <div class="col-12" [class.d-none]="user.user_type === 'provider'">
                   <label for="inputAddress" class="form-label">Address</label>
                   <input type="text" class="form-control" name="address" [(ngModel)]="address" 
                    id="inputAddress">     
                               
-                </div>               
+                </div>                -->
                 
                 
                 <div class="col-12">
@@ -82,14 +82,14 @@
                   </div>
                 </div>
     
-                <div class="col-12">
+                <!-- <div class="col-12">
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="newsletterCheck">
                       <label class="form-check-label" for="newsletterCheck">
                         Sign me up for that awesome newsletter!
                       </label>
                     </div>
-                  </div>
+                  </div> -->
     
                 <div class="col-12">
                   <button *ngIf="!loading;" type="button" class="btn btn-primary" (click)="signupClicked(signupForm)">Sign up</button>

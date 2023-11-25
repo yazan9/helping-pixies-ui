@@ -65,7 +65,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
   }
 
   signupClicked(signupForm: NgForm): void {
-    if(signupForm.valid && this.user.phone.trim() !== ''){
+    if(signupForm.valid){
       if(this.user.user_type === 'provider' && this.user.address.trim() === ''){
         this.openLocationConfirmationDialog();
         return;
@@ -200,8 +200,7 @@ export class SignupComponent implements OnInit, AfterViewInit{
 
   private validateUser(): boolean{
     return this.user.email.trim() !== '' && 
-    this.user.name.trim() !== '' && 
-    this.user.phone.trim() !== '' && 
+    this.user.name.trim() !== '' &&  
     this.user.password.trim() !== ''
   }
 
